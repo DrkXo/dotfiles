@@ -1,0 +1,20 @@
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:preview
+    container_name: suwayomi
+    environment:
+      - DOWNLOAD_AS_CBZ=true
+      - EXTENSION_REPOS=["https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json", ]
+      - TZ=Etc/UTC # Use your timezone from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      - WEB_UI_ENABLED=true
+      - WEB_UI_FLAVOR=WebUI
+      - WEB_UI_CHANNEL=preview
+      - FLARESOLVERR_ENABLED=false
+      - FLARESOLVERR_URL=http://flaresolverr:8191
+    volumes:
+      - /home/$USER/Documents/.tachidesk/:/home/suwayomi/.local/share/Tachidesk
+    ports:
+      - "4567:4567"
+    restart: unless-stopped
+    # depends_on:
+      # - flaresolverr
