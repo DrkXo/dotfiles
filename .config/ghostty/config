@@ -1,0 +1,14 @@
+# ➤ Font (JetBrains Mono Nerd)
+font-family = "JetBrainsMono Nerd Font"
+
+font-size = 12
+
+
+theme = "DimmedMonokai"
+
+
+# ➤ Window styling
+window-decoration = "server"
+window-theme = "auto"
+
+
