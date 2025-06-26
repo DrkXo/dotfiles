@@ -10,6 +10,11 @@ environment {
     WAYLAND_DISPLAY "wayland-1"
     DISPLAY ":1"
 
+    // For KDE apps
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "kde"
+    // GTK_THEME "your-theme-name"
+
 }
 
 //   _____ _   _ ______ _   _ _____ _____
@@ -206,6 +211,11 @@ overview {
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+// For themes, you might want:
+spawn-at-startup "xsettingsd"
+// KDE integration
+spawn-at-startup "kwalletd6"
+spawn-at-startup "kdeconnectd"
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 
