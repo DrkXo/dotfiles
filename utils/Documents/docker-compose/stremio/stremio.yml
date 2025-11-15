@@ -1,0 +1,12 @@
+services:
+  stremio:
+    image: stremio/server:latest
+    container_name: stremio
+    ports:
+      - "11470:11470"  # Internal API
+      - "12470:12470"  # Web UI / HTTP API
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - /home/drkxo/Documents/stremio:/root/.stremio-server  # Persist settings & metadata

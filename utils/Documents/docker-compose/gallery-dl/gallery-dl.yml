@@ -1,0 +1,12 @@
+services:
+  gallery-dl:
+    image: ghcr.io/mikf/gallery-dl:latest
+    entrypoint: ["/bin/sh"]
+    container_name: gallery-dl
+    stdin_open: true
+    tty: true
+    volumes:
+      - "${HOME}/Downloads:/gallery-dl"
+      - "${HOME}/.config/gallery-dl/gallery-dl.conf:/etc/gallery-dl.conf:ro"
+    # Automatically remove container after it exits (equivalent to --rm)
+    restart: "no"

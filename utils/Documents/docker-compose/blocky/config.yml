@@ -1,0 +1,21 @@
+upstream:
+  default:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+
+blocking:
+  blackLists:
+    ads:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+  clientGroupsBlock:
+    default:
+      - ads
+
+port: 53
+
+httpPort: 4000 # Optional: Web dashboard
+
+caching:
+  minTime: 5m
+  maxTime: 30m
+  prefetching: true

@@ -1,0 +1,13 @@
+services:
+  gopeed:
+    image: liwei2633/gopeed:latest
+    container_name: gopeed
+    restart: unless-stopped
+    ports:
+      - "9999:9999"  # Web UI and API
+    volumes:
+      - /home/$USER/Downloads/GoSpeed/Downloads:/app/Downloads  # Download directory
+      - /home/$USER/Downloads/GoSpeed/Storage:/app/storage  # Persistent storage
+    environment:
+      - PUID=1000  # Change to match your user ID
+      - PGID=1000  # Change to match your group ID

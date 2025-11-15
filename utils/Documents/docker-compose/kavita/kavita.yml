@@ -1,0 +1,12 @@
+services:
+  kavita:
+    image: jvmilazz0/kavita:latest
+    container_name: kavita
+    volumes:
+      - /home/$USER/Documents/kavita/config:/kavita/config  # /kavita/config must not be changed
+      - /home/$USER/Documents/kavita/manga:/manga
+      - /home/$USER/Documents/kavita/comics:/comics
+      - /home/$USER/Documents/kavita/books:/books
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
