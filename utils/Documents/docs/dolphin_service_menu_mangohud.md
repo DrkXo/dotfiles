@@ -27,7 +27,7 @@ Paste this content into the file:
 Type=Service
 ServiceTypes=KonqPopupMenu/Plugin
 MimeType=application/x-ms-dos-executable;application/x-msdownload
-Actions=RunWithMangoHud;RunWithMangoHudGOverlay;
+Actions=RunWithMangoHud;
 X-KDE-Priority=TopLevel
 Icon=wine
 
@@ -36,10 +36,6 @@ Name=Run with Wine + MangoHud
 Icon=wine
 Exec=env MANGOHUD=1 wine "%f"
 
-[Desktop Action RunWithMangoHudGOverlay]
-Name=Run with Wine + MangoHud + GOverlay
-Icon=wine
-Exec=sh -c 'goverlay & env MANGOHUD=1 wine "%f"'
 ```
 
 ---

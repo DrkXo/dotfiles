@@ -1,0 +1,10 @@
+caligula-bin
+caligula-bin-debug
+darkly-bin
+dwarfs-bin
+dwarfs-bin-debug
+gearlever
+klassy-bin
+n-m3u8dl-re-bin
+qt-sudo-debug
+yay-debug
