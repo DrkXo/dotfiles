@@ -29,12 +29,14 @@ envycontrol
 exfat-utils
 fastfetch
 ffmpegthumbs
+filelight
 firefox
 fzf
 gearlever
 ghostty
 git
 github-cli
+godot
 google-chrome
 goverlay
 grub
@@ -50,7 +52,10 @@ kate
 kio-gdrive
 klassy-bin
 konsole
+lib32-gamemode
+lib32-mangohud
 libpulse
+libreoffice-fresh
 libva-nvidia-driver
 linux
 linux-firmware
@@ -63,9 +68,11 @@ nano
 network-manager-applet
 networkmanager
 nfs-utils
+ninja
 ntfs-3g
-nvidia-dkms
+nvidia
 nvidia-settings
+nvtop
 octopi
 okular
 partitionmanager
@@ -76,6 +83,7 @@ pipewire-jack
 pipewire-pulse
 plasma-meta
 plasma-workspace
+power-profiles-daemon
 protonup-qt
 qbittorrent
 rebuild-detector
@@ -89,9 +97,6 @@ starship
 steam
 stow
 timidity++
-tlp
-tlp-rdw
-tlpui
 ttf-fira-code
 ttf-jetbrains-mono
 ttf-ubuntu-font-family
@@ -104,6 +109,7 @@ vlc
 vulkan-intel
 wget
 wine-staging
+winetricks
 wireless_tools
 wireplumber
 xdg-utils
