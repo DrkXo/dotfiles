@@ -110,7 +110,7 @@ alias wd='warp-cli disconnect'
 alias myip='curl -s https://ipinfo.io/ip'
 
 # GPU/Gaming
-alias winegpu="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=1"
+alias winegpu="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=1 MANGOHUD=1"
 alias winerun="$winegpu wine"
 
 # Flutter
