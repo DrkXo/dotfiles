@@ -20,11 +20,11 @@ winetricks -q vcrun2008 vcrun2010 vcrun2013 vcrun2015
 echo ">>> Installing DirectX components..."
 winetricks -q d3dx9 d3dx10 d3dx11_43 d3dcompiler_43 d3dcompiler_47
 
-echo ">>> Installing audio & physics libraries..."
-winetricks -q xact physx
-
-echo ">>> Installing DXVK (for Vulkan-based Direct3D translation)..."
-winetricks -q dxvk
+# echo ">>> Installing audio & physics libraries..."
+# winetricks -q xact physx
+#
+# echo ">>> Installing DXVK (for Vulkan-based Direct3D translation)..."
+# winetricks -q dxvk
 
 echo ">>> Setup complete!"
 echo "Your Wine prefix is ready at: $WINEPREFIX"
