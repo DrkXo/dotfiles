@@ -26,5 +26,7 @@ Icon=wine
 Exec=env MANGOHUD=1 wine "%f"
 EOF
 
+chmod +x "$SERVICE_FILE"
+
 echo "[✔] Service menu created at $SERVICE_FILE"
 echo "[*] You may need to restart Dolphin or log out and back in for it to appear"

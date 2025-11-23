@@ -1,0 +1,138 @@
+{
+  "about": {
+    "browser": "chrome",
+    "version": "21.2.1"
+  },
+  "showall": true,
+  "lang": "en",
+  "dark": "enable",
+  "favicon": "",
+  "tabtitle": "",
+  "greeting": "",
+  "greetingsize": "3",
+  "pagegap": 1,
+  "pagewidth": 1600,
+  "time": true,
+  "main": true,
+  "dateformat": "auto",
+  "quicklinks": true,
+  "textShadow": 0.2,
+  "announcements": "major",
+  "review": -1,
+  "css": "",
+  "hide": {},
+  "linkstyle": "large",
+  "linktitles": true,
+  "linkbackgrounds": false,
+  "linknewtab": false,
+  "linksrow": "4",
+  "linkgroups": {
+    "on": true,
+    "selected": "Shortcuts",
+    "groups": [
+      "Shortcuts"
+    ],
+    "pinned": [],
+    "synced": [
+      "Shortcuts"
+    ]
+  },
+  "backgrounds": {
+    "type": "color",
+    "fadein": 600,
+    "blur": 15,
+    "bright": 0.8,
+    "frequency": "hour",
+    "color": "#1e1e20",
+    "urls": "",
+    "images": "bonjourr-images-daylight",
+    "videos": "bonjourr-videos-daylight",
+    "queries": {},
+    "texture": {
+      "type": "none"
+    }
+  },
+  "clock": {
+    "size": 1,
+    "ampm": true,
+    "analog": false,
+    "seconds": false,
+    "ampmlabel": false,
+    "worldclocks": false,
+    "timezone": "auto"
+  },
+  "worldclocks": [],
+  "analogstyle": {
+    "face": "none",
+    "hands": "modern",
+    "shape": "square",
+    "border": "#ffff",
+    "background": "#fff2"
+  },
+  "weather": {
+    "city": "bhatpara",
+    "unit": "metric",
+    "provider": "",
+    "moreinfo": "none",
+    "forecast": "auto",
+    "temperature": "actual",
+    "geolocation": "approximate"
+  },
+  "notes": {
+    "on": false,
+    "width": 40,
+    "opacity": 0.1,
+    "align": "left",
+    "text": "## Edit this note!\n\n[ ] With markdown titles, lists, and checkboxes\n\n[ ] Learn more on https://bonjourr.fr/docs/overview"
+  },
+  "searchbar": {
+    "on": false,
+    "opacity": 0.1,
+    "newtab": false,
+    "suggestions": true,
+    "engine": "default",
+    "request": "",
+    "placeholder": ""
+  },
+  "quotes": {
+    "on": true,
+    "type": "classic",
+    "frequency": "hour",
+    "author": true,
+    "last": 1763868654406
+  },
+  "font": {
+    "size": "14",
+    "family": "",
+    "system": true,
+    "weightlist": [],
+    "weight": "300"
+  },
+  "supporters": {
+    "enabled": true,
+    "closed": true,
+    "month": 11
+  },
+  "move": {
+    "selection": "single",
+    "layouts": {
+      "single": {
+        "grid": [
+          [
+            "time"
+          ],
+          [
+            "main"
+          ],
+          [
+            "quicklinks"
+          ],
+          [
+            "quotes"
+          ]
+        ],
+        "items": {}
+      }
+    }
+  }
+}

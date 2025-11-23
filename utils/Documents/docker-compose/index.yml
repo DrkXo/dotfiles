@@ -2,5 +2,3 @@ include:
   - flaresolverr/flaresolverr.yml
   - tachidesk/tachidesk.yml
   - stremio/stremio.yml
-  - glance/glance.yml
-
