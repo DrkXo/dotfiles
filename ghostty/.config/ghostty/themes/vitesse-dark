@@ -1,0 +1,43 @@
+# Vitesse Dark theme for Ghostty
+# Converted from KDE color scheme
+
+# Background and foreground
+background = 121212
+foreground = dbd7ca
+
+# Cursor
+cursor-color = 80bf4f
+cursor-text = 121212
+
+# Selection
+selection-background = 35543f
+selection-foreground = ffffff
+
+# Standard colors
+palette = 0=#1c1c1c
+palette = 1=#ff5555
+palette = 2=#80bf4f
+palette = 3=#f4d47c
+palette = 4=#4fb1ba
+palette = 5=#8464ba
+palette = 6=#4fb1ba
+palette = 7=#dbd7ca
+
+# Bright colors
+palette = 8=#666666
+palette = 9=#ff9696
+palette = 10=#aadc80
+palette = 11=#ffeba8
+palette = 12=#99ced2
+palette = 13=#baa0dc
+palette = 14=#99ced2
+palette = 15=#ffffff
+
+# Additional UI colors (if supported)
+# Based on KDE scheme mappings:
+# - Background: #121212 (View/BackgroundNormal)
+# - Foreground: #dbd7ca (Window/ForegroundNormal)
+# - Accent: #80bf4f (DecorationFocus - green)
+# - Link: #4fb1ba (ForegroundLink - cyan)
+# - Error: #ff5555 (ForegroundNegative - red)
+# - Warning: #f4d47c (ForegroundNeutral - yellow)
