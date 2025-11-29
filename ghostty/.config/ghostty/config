@@ -1,5 +1,5 @@
 shell-integration = zsh
 # theme = everforest-dark
-theme = vitesse-dark
+# theme = vitesse-dark
 # theme = Dimmed Monokai
-
+theme = zen

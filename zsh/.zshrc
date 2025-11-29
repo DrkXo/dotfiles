@@ -119,6 +119,9 @@ alias brb='dart run build_runner build --delete-conflicting-outputs'
 # Audio share
 alias audio_share="$HOME/Apps/audio-share-server-cmd/bin/as-cmd -b"
 
+# n-m3u8dl-re
+alias m3u8dl='n-m3u8dl-re'
+
 
 ### ---------------------------------------------------------
 ### 5. Prompt (Starship)
