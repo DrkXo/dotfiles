@@ -29,12 +29,12 @@ services:
       - WEB_UI_ENABLED=true
       - WEB_UI_FLAVOR=WebUI
       - WEB_UI_CHANNEL=preview
-      - FLARESOLVERR_ENABLED=false
+      - FLARESOLVERR_ENABLED=true
       - FLARESOLVERR_URL=http://flaresolverr:8191
     volumes:
       - /home/$USER/Documents/.tachidesk2/:/home/suwayomi/.local/share/Tachidesk
     ports:
       - "4568:4567"
     restart: unless-stopped
-    # depends_on:
-    #   - flaresolverr
+    depends_on:
+      - flaresolverr
