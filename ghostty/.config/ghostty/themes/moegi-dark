@@ -1,0 +1,33 @@
+# Moegi Dark Theme
+# Based on moegi-design color palette
+
+palette = 0=#333333
+palette = 1=#e47474
+palette = 2=#66b395
+palette = 3=#e2c97e
+palette = 4=#7098d4
+palette = 5=#b290ba
+palette = 6=#6ab8c0
+palette = 7=#dddddd
+palette = 8=#666666
+palette = 9=#f48484
+palette = 10=#76c3a5
+palette = 11=#f2d98e
+palette = 12=#80a8e4
+palette = 13=#c2a0ca
+palette = 14=#7ac8d0
+palette = 15=#f6f6f6
+
+background = #181818
+foreground = #c0c0c0
+selection-background = #444444
+selection-foreground = #ffffff
+cursor = #ff8787
+cursor-foreground = #181818
+split-divider-color = #444444
+tab-active-background = #66b395
+tab-active-foreground = #ffffff
+tab-inactive-background = #181818
+tab-inactive-foreground = #cccccc
+border-color = #444444
+border-active-color = #66b395

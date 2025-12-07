@@ -1,0 +1,80 @@
+/* Moegi Dark GTK4 Theme Configuration */
+/* Based on moegi-design color palette */
+
+@define-color bg_color #202020;
+@define-color fg_color #dddddd;
+@define-color base_color #202020;
+@define-color text_color #dddddd;
+@define-color selected_bg_color #66b395;
+@define-color selected_fg_color #ffffff;
+@define-color tooltip_bg_color #2a2a2a;
+@define-color tooltip_fg_color #dddddd;
+
+/* Window colors */
+@define-color window_bg #202020;
+@define-color window_fg #dddddd;
+@define-color headerbar_bg #181818;
+@define-color headerbar_fg #cccccc;
+@define-color headerbar_border #ffffff12;
+@define-color card_bg #202020;
+@define-color card_fg #dddddd;
+@define-color popover_bg #2a2a2a;
+@define-color popover_fg #dddddd;
+@define-color dialog_bg #2a2a2a;
+@define-color dialog_fg #dddddd;
+
+/* Widget colors */
+@define-color button_bg #202020;
+@define-color button_fg #dddddd;
+@define-color button_border #ffffff10;
+@define-color button_hover_bg #444444;
+@define-color button_active_bg #66b395;
+@define-color button_active_fg #000000;
+
+/* Entry colors */
+@define-color entry_bg #202020;
+@define-color entry_fg #dddddd;
+@define-color entry_border #ffffff10;
+@define-color entry_placeholder_fg #777777;
+
+/* View colors */
+@define-color view_bg #202020;
+@define-color view_fg #dddddd;
+@define-color view_hover_bg #444444;
+@define-color view_selected_bg #66b395;
+@define-color view_selected_fg #ffffff;
+
+/* Accent colors */
+@define-color accent_color #ff8787;
+@define-color accent_bg_color #ff8787;
+@define-color accent_fg_color #000000;
+@define-color success_color #66b395;
+@define-color success_bg_color #66b395;
+@define-color success_fg_color #000000;
+@define-color warning_color #e7d38f;
+@define-color warning_bg_color #e7d38f;
+@define-color warning_fg_color #000000;
+@define-color error_color #ff8787;
+@define-color error_bg_color #ff8787;
+@define-color error_fg_color #000000;
+
+/* Disabled colors */
+@define-color disabled_fg #777777;
+@define-color disabled_bg #202020;
+@define-color disabled_border #ffffff08;
+
+/* Link colors */
+@define-color link_color #ff8787;
+@define-color visited_link_color #ff8787cc;
+
+/* Sidebar colors */
+@define-color sidebar_bg #181818;
+@define-color sidebar_fg #cccccc;
+@define-color sidebar_border #ffffff12;
+
+/* Tab colors */
+@define-color tab_bg #181818;
+@define-color tab_fg #cccccc;
+@define-color tab_active_bg #202020;
+@define-color tab_active_fg #dddddd;
+@define-color tab_border #ffffff12;

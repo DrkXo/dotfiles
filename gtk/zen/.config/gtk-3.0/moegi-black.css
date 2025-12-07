@@ -1,0 +1,90 @@
+# Moegi Black GTK Theme Configuration
+# Based on moegi-design color palette
+
+[Settings]
+gtk-application-prefer-dark-theme=true
+gtk-theme-name=Adwaita-dark
+gtk-icon-theme-name=Adwaita
+gtk-font-name=Sans 11
+gtk-cursor-theme-name=Adwaita
+gtk-cursor-theme-size=24
+
+[ColorScheme]
+# Base colors
+bg_color=#0d0d0d
+fg_color=#dddddd
+base_color=#0d0d0d
+text_color=#dddddd
+selected_bg_color=#66b395
+selected_fg_color=#ffffff
+tooltip_bg_color=#181818
+tooltip_fg_color=#dddddd
+
+# Window colors
+window_bg=#0d0d0d
+window_fg=#dddddd
+headerbar_bg=#050505
+headerbar_fg=#aaaaaa
+headerbar_border=#ffffff15
+card_bg=#0d0d0d
+card_fg=#dddddd
+popover_bg=#181818
+popover_fg=#dddddd
+dialog_bg=#181818
+dialog_fg=#dddddd
+
+# Widget colors
+button_bg=#0d0d0d
+button_fg=#dddddd
+button_border=#ffffff07
+button_hover_bg=#292929
+button_active_bg=#66b395
+button_active_fg=#000000
+
+# Entry colors
+entry_bg=#0f0f0f
+entry_fg=#dddddd
+entry_border=#ffffff07
+entry_placeholder_fg=#6c6c6c
+
+# View colors
+view_bg=#0d0d0d
+view_fg=#dddddd
+view_hover_bg=#292929
+view_selected_bg=#66b395
+view_selected_fg=#ffffff
+
+# Accent colors
+accent_color=#ff8787
+accent_bg_color=#ff8787
+accent_fg_color=#000000
+success_color=#66b395
+success_bg_color=#66b395
+success_fg_color=#000000
+warning_color=#e7d38f
+warning_bg_color=#e7d38f
+warning_fg_color=#000000
+error_color=#ff8787
+error_bg_color=#ff8787
+error_fg_color=#000000
+
+# Disabled colors
+disabled_fg=#6c6c6c
+disabled_bg=#0d0d0d
+disabled_border=#ffffff05
+
+# Link colors
+link_color=#ff8787
+visited_link_color=#ff8787cc
+
+# Sidebar colors
+sidebar_bg=#050505
+sidebar_fg=#aaaaaa
+sidebar_border=#ffffff15
+
+# Tab colors
+tab_bg=#050505
+tab_fg=#aaaaaa
+tab_active_bg=#0d0d0d
+tab_active_fg=#dddddd
+tab_border=#ffffff10
