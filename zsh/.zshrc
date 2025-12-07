@@ -122,8 +122,10 @@ alias audio_share="$HOME/Apps/audio-share-server-cmd/bin/as-cmd -b"
 # n-m3u8dl-re
 alias m3u8dl='n-m3u8dl-re'
 
+# Spatial Media
+alias sm='python /home/$USER/Apps/spatialmedia/gui.py'
 
-### ---------------------------------------------------------
+# ---------------------------------------------------------
 ### 5. Prompt (Starship)
 ### ---------------------------------------------------------
 eval "$(starship init zsh)"
@@ -161,4 +163,4 @@ bindkey '^[[5D'    backward-word       # some terminals use this
 # Ctrl + Right: forward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^[[5C'    forward-word        # alternate sequence
-
+export XDG_CURRENT_DESKTOP=KDE
