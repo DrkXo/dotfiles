@@ -1,5 +1,5 @@
 [Appearance]
-ColorScheme=Monochrome
+ColorScheme=MoegiDark
 
 [General]
 Command=/usr/bin/zsh
