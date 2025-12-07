@@ -10,6 +10,7 @@ include "./layout.kdl"
 include "./startup.kdl"
 include "./window-rules.kdl"
 include "./keybinds.kdl"
+include "./environment.kdl"
 
 // Include your theme
 include "./noctalia.kdl"
