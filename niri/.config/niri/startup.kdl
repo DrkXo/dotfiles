@@ -9,6 +9,7 @@
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 spawn-at-startup "qs" "-c" "noctalia-shell"
+spawn-at-startup "kwalletd5"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
