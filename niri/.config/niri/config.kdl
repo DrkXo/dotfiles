@@ -11,6 +11,8 @@ include "./startup.kdl"
 include "./window-rules.kdl"
 include "./keybinds.kdl"
 include "./environment.kdl"
+include "./recent-windows-switcher.kdl"
+include "./animations.kdl"
 
 // Include your theme
 include "./noctalia.kdl"
