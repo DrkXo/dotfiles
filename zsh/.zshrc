@@ -125,6 +125,9 @@ alias m3u8dl='n-m3u8dl-re'
 # Spatial Media
 alias sm='python /home/$USER/Apps/spatialmedia/gui.py'
 
+# Rsync
+alias rsyncc='rsync -avhW --no-compress --progress'
+
 # ---------------------------------------------------------
 ### 5. Prompt (Starship)
 ### ---------------------------------------------------------
