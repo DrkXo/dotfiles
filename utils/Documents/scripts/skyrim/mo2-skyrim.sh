@@ -59,7 +59,7 @@ echo "📊 Mangohud enabled"
 
 cd "$SKYRIM_DIR"
 
-"$PROTON_BIN" run "$MO2_EXE"
+
 
 ############################
 # LAUNCH MO2
@@ -70,4 +70,6 @@ echo "📁 Using compatdata: $STEAM_COMPAT_DATA_PATH"
 echo "🧪 Proton: $PROTON_VERSION"
 echo "📊 Mangohud enabled"
 
-"$STEAM_DIR/steamapps/common/$PROTON_VERSION/proton" run "$MO2_EXE"
+"$PROTON_BIN" run "$MO2_EXE"
+
+# "$STEAM_DIR/steamapps/common/$PROTON_VERSION/proton" run "$MO2_EXE"
