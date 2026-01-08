@@ -7,6 +7,7 @@ services:
 
     volumes:
       - ./unbound.conf:/etc/unbound/unbound.conf:ro
+      - ./unbound-data/named.root:/etc/unbound/root.hints:ro
 
     environment:
       - TZ=UTC
