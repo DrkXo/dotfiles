@@ -129,6 +129,21 @@ alias sm='python /home/$USER/Apps/spatialmedia/gui.py'
 alias rsyncc='rsync -avhW --no-compress --progress'
 
 # ---------------------------------------------------------
+### 4.1 Functions
+### ---------------------------------------------------------
+merge_ts() {
+  local out="${1:-output.ts}"
+
+  find . -type f -name "*.ts" -print0 \
+    | sort -z -V \
+    | xargs -0 cat > "$out"
+
+  print "Created $out"
+}
+
+
+
+# ---------------------------------------------------------
 ### 5. Prompt (Starship)
 ### ---------------------------------------------------------
 eval "$(starship init zsh)"
