@@ -3,3 +3,4 @@ include:
   - tachidesk/tachidesk.yml
   - stremio/stremio.yml
   - adguardhome/adguardhome.yml
+  - unbound/unbound.yml
