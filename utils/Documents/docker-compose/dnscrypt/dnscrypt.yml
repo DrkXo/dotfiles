@@ -1,0 +1,53 @@
+services:
+  dnscrypt-proxy:
+    image: gists/dnscrypt-proxy:latest
+    container_name: dnscrypt-proxy
+    restart: unless-stopped
+
+    # Network configuration
+    ports:
+      - "53:53/udp"  # DNS UDP
+      - "53:53/tcp"  # DNS TCP
+
+    # Volume mounts for configuration
+    volumes:
+      - ./dnscrypt-proxy.toml:/etc/dnscrypt-proxy/dnscrypt-proxy.toml:ro
+      # Optional: persist cache and other data
+      # - dnscrypt-data:/var/cache/dnscrypt-proxy
+
+    # Environment variables (optional)
+    environment:
+      - TZ=Asia/Kolkata
+
+    # Capabilities and security
+    cap_add:
+      - NET_BIND_SERVICE
+
+    # Network mode (choose one based on your needs)
+    # Option 1: Bridge mode (default, recommended for most setups)
+    networks:
+      - dns_network
+
+    # Option 2: Host mode (uncomment if you need direct host network access)
+    # network_mode: host
+
+    # DNS settings (optional, prevents circular dependency)
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "dnscrypt-proxy", "-check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  dns_network:
+    driver: bridge
+
+volumes:
+  dnscrypt-data:
+    driver: local
