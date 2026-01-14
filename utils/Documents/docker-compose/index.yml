@@ -3,5 +3,5 @@ include:
   - tachidesk/tachidesk.yml
   - stremio/stremio.yml
   - adguardhome/adguardhome.yml
-  - dnscrypt/dnscrypt.yml
+  # - dnscrypt/dnscrypt.yml
   # - unbound/unbound.yml
