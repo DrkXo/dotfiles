@@ -48,7 +48,6 @@ zinit light-mode for \
 ### ---------------------------------------------------------
 ### 2. PATH variables (AFTER Zinit block)
 ### ---------------------------------------------------------
-export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export ANDROID_HOME="$HOME/Android/Sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
@@ -145,14 +144,12 @@ merge_ts() {
 
 
 # ---------------------------------------------------------
-### 5. Prompt (Oh My Posh)
+### 5. Prompt (Starship)
 ### ---------------------------------------------------------
-# Using built-in theme - change 'atomic' to any theme name you like
-# Available themes: ls ~/.cache/oh-my-posh/themes/
-eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/di4am0nd.omp.json)"
+eval "$(starship init zsh)"
 
-# Fallback prompt (if Oh My Posh fails to load)
-if [[ -z "$POSH_THEME" ]]; then
+# Fallback prompt
+if [[ -z "$STARSHIP_SHELL" ]]; then
   PROMPT='%F{cyan}[%n@%m %1~]%f$ '
 fi
 
