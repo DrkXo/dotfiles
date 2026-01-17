@@ -149,6 +149,7 @@ merge_ts() {
 ### ---------------------------------------------------------
 # Using built-in theme - change 'atomic' to any theme name you like
 # Available themes: ls ~/.cache/oh-my-posh/themes/
+# eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/ys.omp.json)"
 eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/di4am0nd.omp.json)"
 
 # Fallback prompt (if Oh My Posh fails to load)
