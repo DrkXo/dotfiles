@@ -3,5 +3,7 @@ include:
   - tachidesk/tachidesk.yml
   - stremio/stremio.yml
   - adguardhome/adguardhome.yml
+  # - kavita/kavita.yml
+  # - calibre-web/calibre-web.yml
   # - dnscrypt/dnscrypt.yml
   # - unbound/unbound.yml
