@@ -4,3 +4,5 @@ shell-integration = zsh
 # theme = Dimmed Monokai
 # theme = zen
 theme = moegi-dark
+background-opacity = 0.8
+background-blur-radius = 20
