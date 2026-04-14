@@ -129,6 +129,10 @@ alias sm='python /home/$USER/Apps/spatialmedia/gui.py'
 # Rsync
 alias rsyncc='rsync -avhW --no-compress --progress'
 
+# Battery Conversion Mode Switch
+alias batt60='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
+alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
+
 # ---------------------------------------------------------
 ### 4.1 Functions
 ### ---------------------------------------------------------

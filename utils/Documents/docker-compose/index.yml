@@ -1,6 +1,7 @@
 include:
   - flaresolverr/flaresolverr.yml
   - tachidesk/tachidesk.yml
+  - komga/komga.yml
   - stremio/stremio.yml
   - adguardhome/adguardhome.yml
   # - kavita/kavita.yml
