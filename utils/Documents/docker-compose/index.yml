@@ -1,9 +1,10 @@
 include:
   - flaresolverr/flaresolverr.yml
   - tachidesk/tachidesk.yml
-  - komga/komga.yml
-  - stremio/stremio.yml
-  - adguardhome/adguardhome.yml
+  # - stremio/stremio.yml
+  # - headscale/headscale.yml
+  # - komga/komga.yml
+  # - adguardhome/adguardhome.yml
   # - kavita/kavita.yml
   # - calibre-web/calibre-web.yml
   # - dnscrypt/dnscrypt.yml
