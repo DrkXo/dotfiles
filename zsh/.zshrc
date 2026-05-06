@@ -53,6 +53,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export ANDROID_HOME="$HOME/Android/Sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/29.0.14033849"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin/:$ANDROID_HOME/cmdline-tools/latest/bin/"
 
 export PATH="$PATH:$HOME/SDK/flutter/bin"
 export PATH="$PATH:$HOME/.pub-cache/bin"
@@ -116,6 +118,7 @@ alias winerun="$winegpu wine"
 
 # Flutter
 alias brb='dart run build_runner build --delete-conflicting-outputs'
+alias ff='flutter clean && flutter pub get'
 
 # Audio share
 alias audio_share="$HOME/Apps/audio-share-server-cmd/bin/as-cmd -b"
