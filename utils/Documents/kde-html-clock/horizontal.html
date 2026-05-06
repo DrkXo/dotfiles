@@ -1,0 +1,53 @@
+<style type="text/css">
+.two-rows-cell {
+    vertical-align: middle;
+    padding-right: 3px;
+}
+
+.devider {
+    background-color: #66ffffff;
+    padding: 0;
+}
+
+.date-cell {
+    text-align: left;
+    vertical-align: bottom;
+    font-size: 13px;
+    padding-left: 3px;
+    line-height: 1.1;
+}
+
+.clock {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.seconds {
+    font-size: 20px;
+}
+
+.dot {
+    font-size: 20px;
+}
+
+.bright { color: #e6ffffff; }
+.dark { color: #aaffffff; }
+</style>
+
+<table style="border-collapse: collapse;">
+<tbody>
+  <tr>
+    <td class="two-rows-cell clock bright" rowspan="2">
+      {kk}:{ii}
+    </td>
+
+    <td class="two-rows-cell devider" rowspan="2" width="1"></td>
+
+    <td class="date-cell dark">{DD:U},</td>
+  </tr>
+
+  <tr>
+    <td class="date-cell dark">{MM:U} {dd}</td>
+  </tr>
+</tbody>
+</table>
