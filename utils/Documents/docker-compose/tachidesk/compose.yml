@@ -36,5 +36,5 @@ services:
     ports:
       - "4568:4567"
     restart: unless-stopped
-    depends_on:
-      - flaresolverr
+    # depends_on:
+    #   - flaresolverr
