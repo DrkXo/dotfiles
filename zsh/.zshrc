@@ -225,4 +225,7 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
-eval "$(zellij setup --generate-auto-start zsh)"
+
+
+# zellij auto start with shell
+# eval "$(zellij setup --generate-auto-start zsh)"
