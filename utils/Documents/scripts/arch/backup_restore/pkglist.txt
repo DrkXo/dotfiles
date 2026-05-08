@@ -35,8 +35,6 @@ dbeaver
 discord
 dkms
 dnsmasq
-docker
-docker-compose
 dolphin
 easyeffects
 efibootmgr
@@ -52,6 +50,7 @@ ghostty
 git
 github-cli
 glab
+goaccess
 godot
 google-chrome
 goverlay
@@ -74,7 +73,6 @@ krdc
 krita
 kvantum
 kwalletmanager
-lazydocker
 lazygit
 lib32-gamemode
 lib32-mangohud
@@ -95,7 +93,9 @@ nano
 neovim
 network-manager-applet
 networkmanager
+networkmanager-l2tp
 networkmanager-openconnect
+networkmanager-strongswan
 nfs-utils
 ninja
 niri
@@ -108,6 +108,7 @@ nvtop
 octopi
 okular
 opencode-bin
+openldap
 partitionmanager
 pavucontrol-qt
 pipewire
@@ -118,6 +119,10 @@ plasma-meta
 plasma-workspace
 plasma6-applets-appgrid
 pnpm
+podman
+podman-compose
+podman-desktop
+podman-tui-bin
 power-profiles-daemon
 protontricks-git
 protonup-qt
@@ -133,8 +138,10 @@ sof-firmware
 starship
 steam
 stow
+strongswan
 surge-bin
 system-config-printer
+systemd-resolvconf
 tailscale
 timidity++
 trash-cli
@@ -167,6 +174,7 @@ yay-debug
 yazi
 youtube-tui-full-bin
 zed
+zellij
 zoxide
 zram-generator
 zsh

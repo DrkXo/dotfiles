@@ -12,10 +12,11 @@ libkdcraw5
 libkolabxml
 n-m3u8dl-re-bin
 nvidia-580xx-settings-debug
-opencode-bin
 opencomic-bin-debug
 plasma6-applets-appgrid
 plasma6-applets-appgrid-debug
+podman-tui-bin
+podman-tui-bin-debug
 qt-sudo-debug
 quazip-qt5
 surge-bin
