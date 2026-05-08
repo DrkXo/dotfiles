@@ -151,18 +151,31 @@ merge_ts() {
 
 
 
-# ---------------------------------------------------------
-### 5. Prompt (Oh My Posh)
-### ---------------------------------------------------------
-# Using built-in theme - change 'atomic' to any theme name you like
-# Available themes: ls ~/.cache/oh-my-posh/themes/
-# eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/ys.omp.json)"
-eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/di4am0nd.omp.json)"
+# # ---------------------------------------------------------
+# ### 5. Prompt (Oh My Posh)
+# ### ---------------------------------------------------------
+# # Using built-in theme - change 'atomic' to any theme name you like
+# # Available themes: ls ~/.cache/oh-my-posh/themes/
+# # eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/ys.omp.json)"
+# eval "$(oh-my-posh init zsh --config ~/.cache/oh-my-posh/themes/di4am0nd.omp.json)"
+#
+# # Fallback prompt (if Oh My Posh fails to load)
+# if [[ -z "$POSH_THEME" ]]; then
+#   PROMPT='%F{cyan}[%n@%m %1~]%f$ '
+# fi
 
-# Fallback prompt (if Oh My Posh fails to load)
-if [[ -z "$POSH_THEME" ]]; then
+
+
+# ---------------------------------------------------------
+### 5. Prompt (Starship)
+### ---------------------------------------------------------
+eval "$(starship init zsh)"
+
+# Fallback prompt
+if [[ -z "$STARSHIP_SHELL" ]]; then
   PROMPT='%F{cyan}[%n@%m %1~]%f$ '
 fi
+
 
 
 
@@ -212,3 +225,4 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+eval "$(zellij setup --generate-auto-start zsh)"
