@@ -1,0 +1,16 @@
+# image: docker.io/mitmproxy/mitmproxy:latest
+
+
+services:
+  mitmproxy:
+    image: docker.io/mitmproxy/mitmproxy:latest
+    container_name: mitmproxy
+    volumes:
+      - ./mitmproxy_certs:/home/mitmproxy/.mitmproxy
+    ports:
+      - "8080:8080"      # Proxy port
+      - "127.0.0.1:8081:8081" # Web UI (restricted to localhost)
+    command: mitmweb --web-host 0.0.0.0 --web-port 8081
+    # Interactive modes (mitmproxy) require tty and stdin_open
+    tty: true
+    stdin_open: true

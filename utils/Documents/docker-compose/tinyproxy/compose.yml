@@ -2,6 +2,19 @@ services:
   tinyproxy:
     image: docker.io/vimagick/tinyproxy
     container_name: tinyproxy
+
     restart: unless-stopped
+
     ports:
       - "8080:8888"
+
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+    volumes:
+      - ./tinyproxy.conf:/etc/tinyproxy/tinyproxy.conf:ro
+      - ./logs:/var/log/tinyproxy
+
+    environment:
+      TZ: Asia/Kolkata
