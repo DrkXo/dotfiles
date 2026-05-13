@@ -61,6 +61,7 @@ export PATH="$PATH:$HOME/.pub-cache/bin"
 export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
 
+
 ### ---------------------------------------------------------
 ### 3. Plugins
 ### ---------------------------------------------------------
@@ -228,16 +229,20 @@ unset __mamba_setup
 
 
 # zellij auto start with shell
-# eval "$(zellij setup --generate-auto-start zsh)"
+if command -v zellij &>/dev/null; then
+    if [[ -z "$ZELLIJ" ]]; then
+        ZJ_SESSION_NAME="${USER}"
+        ZJ_SESSIONS=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
 
-
-
-# ZJ_SESSIONS=$(zellij list-sessions)
-# NO_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
-#
-# if [ "${NO_SESSIONS}" -ge 2 ]; then
-#     zellij attach \
-#     "$(echo "${ZJ_SESSIONS}" | sk)"
-# else
-#    zellij attach -c
-# fi
+        if echo "${ZJ_SESSIONS}" | grep -q "^${ZJ_SESSION_NAME}"; then
+            if echo "${ZJ_SESSIONS}" | grep "^${ZJ_SESSION_NAME}" | grep -q "EXITED"; then
+                zellij delete-session "${ZJ_SESSION_NAME}"
+                zellij --session "${ZJ_SESSION_NAME}"
+            else
+                zellij attach "${ZJ_SESSION_NAME}"
+            fi
+        else
+            zellij --session "${ZJ_SESSION_NAME}"
+        fi
+    fi
+fi
