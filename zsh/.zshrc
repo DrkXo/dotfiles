@@ -138,6 +138,9 @@ alias rsyncc='rsync -avhW --no-compress --progress'
 alias batt60='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 
+# quick user zellij
+alias zj='zellij attach --create "${USER}"'
+
 # ---------------------------------------------------------
 ### 4.1 Functions
 ### ---------------------------------------------------------
@@ -229,14 +232,14 @@ unset __mamba_setup
 # <<< mamba initialize <<<
 
 
-# zellij auto start with shell
-if command -v zellij >/dev/null 2>&1 \
-    && [[ -z "${ZELLIJ:-}" ]] \
-    && [[ -o interactive ]] \
-    && [[ -z "${SSH_ORIGINAL_COMMAND:-}" ]]; then
-
-    printf "Start zellij? [y/N] "
-    read -r ans
-
-    [[ "$ans" =~ ^[Yy]$ ]] && exec zellij attach --create "${USER}"
-fi
+# # zellij auto start with shell
+# if command -v zellij >/dev/null 2>&1 \
+#     && [[ -z "${ZELLIJ:-}" ]] \
+#     && [[ -o interactive ]] \
+#     && [[ -z "${SSH_ORIGINAL_COMMAND:-}" ]]; then
+#
+#     printf "Start zellij? [y/N] "
+#     read -r ans
+#
+#     [[ "$ans" =~ ^[Yy]$ ]] && exec zellij attach --create "${USER}"
+# fi
