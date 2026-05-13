@@ -28,6 +28,8 @@ cliphist
 cloudflare-warp-bin
 cmake
 cnrdrvcups-lb-bin
+cockpit
+cockpit-docker
 croc
 cups-pdf
 darkly-bin
@@ -35,6 +37,8 @@ dbeaver
 discord
 dkms
 dnsmasq
+docker
+docker-compose
 dolphin
 easyeffects
 efibootmgr
@@ -47,6 +51,7 @@ forgejo-cli
 fzf
 gearlever
 ghostty
+gimp
 git
 github-cli
 glab
@@ -70,9 +75,9 @@ kio-gdrive
 klassy-git
 konsole
 krdc
-krita
 kvantum
 kwalletmanager
+lazydocker
 lazygit
 lib32-gamemode
 lib32-mangohud
@@ -119,10 +124,6 @@ plasma-meta
 plasma-workspace
 plasma6-applets-appgrid
 pnpm
-podman
-podman-compose
-podman-desktop
-podman-tui-bin
 power-profiles-daemon
 protontricks-git
 protonup-qt
@@ -131,6 +132,7 @@ qbittorrent
 rebuild-detector
 rsync
 scummvm
+skim
 smartmontools
 smplayer
 snapper
@@ -154,8 +156,6 @@ unzip
 upscayl-bin
 vim
 visual-studio-code-bin
-vivaldi
-vivaldi-ffmpeg-codecs
 vlc
 vulkan-intel
 wget
@@ -165,6 +165,7 @@ winetricks
 wireguard-tools
 wireless_tools
 wireplumber
+xcaddy
 xdg-utils
 xdotool
 xorg-xinit
