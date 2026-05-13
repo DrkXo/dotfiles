@@ -60,8 +60,6 @@ export PATH="$PATH:$HOME/SDK/flutter/bin"
 export PATH="$PATH:$HOME/.pub-cache/bin"
 export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
-
-
 ### ---------------------------------------------------------
 ### 3. Plugins
 ### ---------------------------------------------------------
@@ -137,6 +135,10 @@ alias rsyncc='rsync -avhW --no-compress --progress'
 # Battery Conversion Mode Switch
 alias batt60='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
+
+# lazy podman
+alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker'
+
 
 # quick user zellij
 alias zj='zellij attach --create "${USER}"'
