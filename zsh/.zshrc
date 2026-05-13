@@ -230,20 +230,13 @@ unset __mamba_setup
 
 
 # zellij auto start with shell
-if command -v zellij &>/dev/null; then
-    if [[ -z "$ZELLIJ" ]]; then
-        ZJ_SESSION_NAME="${USER}"
-        ZJ_SESSIONS=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
+if command -v zellij >/dev/null 2>&1 \
+    && [[ -z "${ZELLIJ:-}" ]] \
+    && [[ -o interactive ]] \
+    && [[ -z "${SSH_ORIGINAL_COMMAND:-}" ]]; then
 
-        if echo "${ZJ_SESSIONS}" | grep -q "^${ZJ_SESSION_NAME}"; then
-            if echo "${ZJ_SESSIONS}" | grep "^${ZJ_SESSION_NAME}" | grep -q "EXITED"; then
-                zellij delete-session "${ZJ_SESSION_NAME}"
-                zellij --session "${ZJ_SESSION_NAME}"
-            else
-                zellij attach "${ZJ_SESSION_NAME}"
-            fi
-        else
-            zellij --session "${ZJ_SESSION_NAME}"
-        fi
-    fi
+    printf "Start zellij? [y/N] "
+    read -r ans
+
+    [[ "$ans" =~ ^[Yy]$ ]] && exec zellij attach --create "${USER}"
 fi
