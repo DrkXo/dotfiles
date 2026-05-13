@@ -1,6 +1,6 @@
 services:
   hysteria:
-    image: tobyxdd/hysteria
+    image: docker.io/tobyxdd/hysteria:latest
     container_name: hysteria
     restart: always
     network_mode: "host"
