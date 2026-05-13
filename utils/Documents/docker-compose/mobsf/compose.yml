@@ -1,19 +1,20 @@
 services:
   mobsf:
-    image: docker.io/opensecurity/mobile-security-framework-mobsf:latest
+    image: opensecurity/mobile-security-framework-mobsf:latest
     container_name: mobsf
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
+
+    user: root
 
     ports:
       - "8000:8000"
 
+    stdin_open: true
+    tty: true
+
     security_opt:
       - seccomp=unconfined
 
-    volumes:
-      - mobsf_data:/home/mobsf/.MobSF
+    restart: unless-stopped
 
-volumes:
-  mobsf_data:
+    volumes:
+      - ./mobsf_data:/home/mobsf/.MobSF
