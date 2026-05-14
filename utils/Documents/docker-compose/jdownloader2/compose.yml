@@ -1,6 +1,6 @@
 services:
   jdownloader-2:
-    image: jlesage/jdownloader-2
+    image: docker.io/jlesage/jdownloader-2
     ports:
       - "5800:5800"
     volumes:

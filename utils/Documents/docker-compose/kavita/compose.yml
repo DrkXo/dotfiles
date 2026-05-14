@@ -1,6 +1,6 @@
 services:
   kavita:
-    image: jvmilazz0/kavita:latest
+    image: docker.io/jvmilazz0/kavita:latest
     container_name: kavita
     volumes:
       - /home/$USER/Documents/kavita/config:/kavita/config  # /kavita/config must not be changed

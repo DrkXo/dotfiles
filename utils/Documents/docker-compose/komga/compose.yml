@@ -1,6 +1,6 @@
 services:
   komga:
-    image: gotson/komga
+    image: docker.io/gotson/komga
     container_name: komga
     volumes:
       - type: bind

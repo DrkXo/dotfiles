@@ -1,6 +1,6 @@
 services:
   stremio:
-    image: stremio/server:latest
+    image: docker.io/stremio/server:latest
     container_name: stremio
     ports:
       - "11470:11470"  # Internal API

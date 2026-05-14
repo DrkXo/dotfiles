@@ -1,6 +1,6 @@
 services:
   searxng:
-    image: searxng/searxng:latest
+    image: docker.io/searxng/searxng:latest
     container_name: searxng
     restart: unless-stopped
     ports:

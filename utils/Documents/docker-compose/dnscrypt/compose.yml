@@ -1,6 +1,6 @@
 services:
   dnscrypt-proxy:
-    image: gists/dnscrypt-proxy:latest
+    image: docker.io/gists/dnscrypt-proxy:latest
     container_name: dnscrypt-proxy
     restart: unless-stopped
 

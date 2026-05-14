@@ -1,6 +1,6 @@
 services:
   unbound:
-    image: alpinelinux/unbound:latest
+    image: docker.io/alpinelinux/unbound:latest
     container_name: unbound
     restart: unless-stopped
     network_mode: host

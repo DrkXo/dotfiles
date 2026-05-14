@@ -2,7 +2,7 @@ version: '3'
 
 services:
   blocky:
-    image: spx01/blocky:latest
+    image: docker.io/spx01/blocky:latest
     container_name: blocky
     restart: unless-stopped
     network_mode: "host" # or use a bridge network if needed
