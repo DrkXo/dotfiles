@@ -1,0 +1,70 @@
+services:
+  snx-rs:
+    image: ghcr.io/leleobhz/snx-rs-docker:latest
+    container_name: snx-rs-vpn
+
+    privileged: true
+    network_mode: host
+
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+
+    devices:
+      - /dev/net/tun:/dev/net/tun
+
+    volumes:
+      - ./sessions:/var/cache/snx-rs/sessions
+      - /lib/modules:/lib/modules:ro
+
+    stdin_open: true
+    tty: true
+
+    environment:
+      SNX_SERVER: ${SNX_SERVER}
+      SNX_USER: ${SNX_USER}
+      SNX_PASSWORD: ${SNX_PASSWORD}
+
+    command:
+      - /usr/bin/snx-rs
+      - --mode
+      - standalone
+      - --server-name
+      - ${SNX_SERVER}
+      - --user-name
+      - ${SNX_USER}
+      - --password
+      - ${SNX_PASSWORD}
+
+      - --login-type
+      - vpn_Two_Factor
+
+      - --tunnel-type
+      - ipsec
+
+      - --default-route
+      - "false"
+
+      - --no-routing
+      - "false"
+
+      - --no-dns
+      - "false"
+
+      - --ignore-server-cert
+      - "true"
+
+      - --client-mode
+      - secure_connect
+
+      - --ike-lifetime
+      - "28800"
+
+      - --ike-persist
+      - "false"
+
+      - --mtu
+      - "1350"
+
+      - --transport-type
+      - auto
