@@ -91,7 +91,11 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 alias c="clear"
 alias q="exit"
 
-alias ls="ls --color=auto"
+# Use eza if available, otherwise fallback to ls
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza -la --icons=auto --hyperlink --color=auto --git'
+fi
+
 alias ll="ls -la"
 alias la="ls -A"
 alias l="ls -CF"
