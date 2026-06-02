@@ -1,21 +1,102 @@
-upstream:
-  default:
-    - https://1.1.1.1/dns-query
-    - https://8.8.8.8/dns-query
+# ─────────────────────────────────────────────────────────────────────────────
+# Blocky configuration
+# Docs: https://0xerr0r.github.io/blocky/latest/configuration/
+# ─────────────────────────────────────────────────────────────────────────────
 
+# ── Upstreams ─────────────────────────────────────────────────────────────────
+upstreams:
+  strategy: parallel_best
+  timeout: 2s
+  groups:
+    default:
+      - https://1.1.1.1/dns-query
+      - https://1.0.0.1/dns-query
+      - https://8.8.8.8/dns-query
+      - https://8.8.4.4/dns-query
+
+# Needed so blocky can resolve DoH hostnames at startup inside the container
+bootstrapDns:
+  - tcp+udp:1.1.1.1
+  - tcp+udp:8.8.8.8
+
+# ── Ports ─────────────────────────────────────────────────────────────────────
+ports:
+  dns: 53
+  http: 4000
+
+# ── Blocking ──────────────────────────────────────────────────────────────────
 blocking:
-  blackLists:
+  denylists:
     ads:
+      # StevenBlack — hosts format, works with all Blocky versions
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+
+    hagezi:
+      # Pro already includes light+normal, no need to load all three
+      # Wildcard format = correct format for Blocky v0.23+
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
+      # Uncomment for more aggressive blocking:
+      # - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.plus.txt
+
+    threat:
+      # fake.txt wildcard format (domains/ path returns 404 on current Blocky)
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/fake.txt
+      # TIF medium — full TIF is 1M+ domains, medium is a better balance
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
+
+    native:
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.apple.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.winoffice.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.amazon.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.lgwebos.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.tiktok.txt
+
+  allowlists:
+    ads: []
+
   clientGroupsBlock:
     default:
       - ads
+      - hagezi
+      - threat
+      - native
 
-port: 53
+  blockType: zeroIp
+  blockTTL: 6h
 
-httpPort: 4000 # Optional: Web dashboard
+  loading:
+    refreshPeriod: 24h
+    downloads:
+      timeout: 120s
+      readTimeout: 120s
+      writeTimeout: 60s
+      readHeaderTimeout: 30s
+      attempts: 5
+      cooldown: 10s
+    concurrency: 2
+    strategy: fast
 
+# ── Caching ───────────────────────────────────────────────────────────────────
 caching:
   minTime: 5m
-  maxTime: 30m
+  maxTime: 1h
   prefetching: true
+  prefetchExpires: 2h
+  prefetchThreshold: 5
+  cacheTimeNegative: 30m
+
+# ── Query logging ─────────────────────────────────────────────────────────────
+queryLog:
+  type: csv
+  target: /app/logs
+  logRetentionDays: 7
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+log:
+  level: info
+  format: text
+  timestamp: true
+  privacy: false
+
+# ── TLS ───────────────────────────────────────────────────────────────────────
+minTlsServeVersion: 1.2

@@ -1,17 +1,40 @@
-version: '3'
+version: '3.8'
 
 services:
   blocky:
-    image: docker.io/spx01/blocky:latest
+    image: ghcr.io/0xerr0r/blocky:latest
     container_name: blocky
     restart: unless-stopped
-    network_mode: "host" # or use a bridge network if needed
+    network_mode: "host"
+    cap_add:
+      - NET_BIND_SERVICE
     volumes:
-      - ./config.yml:/app/config.yml
-      - ./logs:/app/logs
+      - ./config.yml:/app/config.yml:ro,Z
+      - ./logs:/app/logs:Z
     environment:
-      - TZ=Etc/UTC  # Change this to your timezone
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "4000:4000/tcp"  # Web dashboard (if enabled)
+      - TZ=Asia/Kolkata
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/api/blocking/status"]
+      interval: 60s       # check less frequently
+      timeout: 10s        # give it more time to respond
+      retries: 5          # allow more failures before marking unhealthy
+      start_period: 60s   # wait longer on startup before checks begin
+
+  blocky-ui:
+    image: ghcr.io/gabeduartem/blocky-ui:latest
+    container_name: blocky-ui
+    restart: unless-stopped
+    network_mode: "host"
+    volumes:
+      - ./logs:/app/logs:ro,Z
+    environment:
+      - BLOCKY_API_URL=http://127.0.0.1:4000
+      - QUERY_LOG_TYPE=csv
+      - QUERY_LOG_TARGET=/app/logs
+      - TZ=Asia/Kolkata
+    # UI available at http://localhost:3000
+
+# Podman-specific notes:
+# - Generate a systemd unit:  podman generate systemd --new --name blocky > ~/.config/systemd/user/blocky.service
+# - Enable on boot (rootless): systemctl --user enable --now blocky.service
+# - Or use quadlet (.container file) on Podman 4.4+
