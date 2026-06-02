@@ -100,3 +100,12 @@ log:
 
 # ── TLS ───────────────────────────────────────────────────────────────────────
 minTlsServeVersion: 1.2
+
+
+
+# ── Local host overrides ──────────────────────────────────────────────────────
+# customDNS:
+#   customTTL: 1h
+#   mapping:
+#     test.com: xxx.xx.xxx.xxx
+

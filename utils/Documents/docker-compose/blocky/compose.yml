@@ -13,12 +13,12 @@ services:
       - ./logs:/app/logs:Z
     environment:
       - TZ=Asia/Kolkata
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:4000/api/blocking/status"]
-      interval: 60s       # check less frequently
-      timeout: 10s        # give it more time to respond
-      retries: 5          # allow more failures before marking unhealthy
-      start_period: 60s   # wait longer on startup before checks begin
+    # healthcheck:
+    #   test: ["CMD", "wget", "-qO-", "http://localhost:4000/api/blocking/status"]
+    #   interval: 60s       # check less frequently
+    #   timeout: 10s        # give it more time to respond
+    #   retries: 5          # allow more failures before marking unhealthy
+    #   start_period: 60s   # wait longer on startup before checks begin
 
   blocky-ui:
     image: ghcr.io/gabeduartem/blocky-ui:latest
