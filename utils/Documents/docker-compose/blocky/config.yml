@@ -109,3 +109,22 @@ minTlsServeVersion: 1.2
 #   mapping:
 #     test.com: xxx.xx.xxx.xxx
 
+customDNS:
+  customTTL: 1h
+  mapping:
+    devsvmcm_5_0.nic.in: 172.25.138.144
+    devhedsso.nic.in: 172.25.138.144
+    gitlabhed.nic.in: 172.25.138.144
+    devsvmcm-5-0.nic.in: 172.25.138.144
+    # - domain: devsvmcm_5_0.nic.in
+    #   answer: 172.25.138.144
+    #   enabled: true
+    # - domain: devhedsso.nic.in
+    #   answer: 172.25.138.144
+    #   enabled: true
+    # - domain: gitlabhed.nic.in
+    #   answer: 172.25.138.144
+    #   enabled: true
+    # - domain: devsvmcm-5-0.nic.in
+    #   answer: 172.25.138.144
+    #   enabled: true

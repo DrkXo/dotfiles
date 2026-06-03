@@ -1,0 +1,66 @@
+########################################
+# DNSCrypt Proxy
+########################################
+listen_addresses = ['0.0.0.0:5353']
+bootstrap_resolvers = ['9.9.9.9:53', '1.1.1.1:53']   # fallback for first boot
+server_names = [
+  'cloudflare-ipv4',        # DNSCrypt version, supports anonymization
+  'quad9-dnscrypt-ip4-filter-pri',
+]
+dnscrypt_servers = true
+doh_servers = false
+ipv4_servers = true
+ipv6_servers = false
+require_dnssec = true
+require_nolog = true
+require_nofilter = false   # set true if you don't want quad9 filtering
+timeout = 5000
+keepalive = 30
+max_clients = 250
+
+########################################
+# Cache
+########################################
+cache = true
+cache_size = 4096
+cache_min_ttl = 300        # less aggressive; was 2400
+cache_max_ttl = 86400
+
+########################################
+# Logging
+########################################
+[query_log]
+file = '/config/data/query.log'   # matches new volume subdir
+format = 'tsv'
+ignored_qtypes = ['AAAA']         # optional: skip IPv6 noise if ipv6_servers=false
+
+########################################
+# Anonymized DNS (use the relays you're fetching)
+########################################
+[anonymized_dns]
+routes = [
+  { server_name = 'cloudflare', via = ['anon-cs-de', 'anon-cs-nl'] },
+]
+skip_incompatible = true
+
+########################################
+# Resolver Sources
+########################################
+[sources]
+  [sources.'public-resolvers']
+  urls = [
+    'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md',
+    'https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md',
+  ]
+  cache_file = '/config/data/public-resolvers.md'
+  minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+  refresh_delay = 72
+
+  [sources.'relays']
+  urls = [
+    'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/relays.md',
+    'https://download.dnscrypt.info/resolvers-list/v3/relays.md',
+  ]
+  cache_file = '/config/data/relays.md'
+  minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+  refresh_delay = 72
