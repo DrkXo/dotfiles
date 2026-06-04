@@ -1,0 +1,37 @@
+# The Quick Terminal Command (Recommended)
+# If you want to keep the files split up (modular), you just need to manually create the network once.
+#
+# Run this in your terminal as the same user who is running the compose command:
+#
+# Bash
+# podman network create privacy-net
+
+services:
+  tor-proxy:
+    image: docker.io/dperson/torproxy:latest
+    container_name: tor-proxy
+    restart: unless-stopped
+    ports:
+      - "9050:9050"
+      - "8118:8118"
+    networks:
+      - privacy-net
+
+  # i2pd:
+  #   image: docker.io/purplei2p/i2pd:latest
+  #   container_name: i2pd
+  #   restart: unless-stopped
+  #   ports:
+  #     - "7070:7070"
+  #     - "4444:4444"
+  #     - "4447:4447"
+  #   volumes:
+  #     # Podman handles rootless UID mappings via :Z, but if i2pd crashes,
+  #     # see the 'Fixing Volume Ownership' section below.
+  #     - ./i2pd_data:/var/lib/i2pd:Z
+  #   networks:
+  #     - privacy-net
+
+networks:
+  privacy-net:
+    external: true

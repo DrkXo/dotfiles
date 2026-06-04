@@ -18,34 +18,51 @@
 #       - TZ=Asia/Kolkata
 
 
+# The Quick Terminal Command (Recommended)
+# If you want to keep the files split up (modular), you just need to manually create the network once.
+#
+# Run this in your terminal as the same user who is running the compose command:
+#
+# Bash
+# podman network create privacy-net
+
+
+
+
+version: "3.8"
 
 services:
-  dnscrypt-proxy:
-    image: docker.io/klutchell/dnscrypt-proxy:latest
-    container_name: dnscrypt-proxy
-    restart: unless-stopped
-    ports:
-      - "53:53/tcp"       # ← moved here from adguardhome
-      - "53:53/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
-      - "3000:3000/tcp"
-    expose:
-      - "5353"
-    volumes:
-      - ./dnscrypt-proxy.toml:/config/dnscrypt-proxy.toml:Z
-      - ./dnscrypt-data:/config/data:Z
-
   adguardhome:
     image: docker.io/adguard/adguardhome:latest
     container_name: adguardhome
     restart: unless-stopped
-    network_mode: "container:dnscrypt-proxy"
-    # no ports here — inherited from dnscrypt-proxy's namespace
+    # We attach all host ports to AdGuard Home so 127.0.0.1/ works perfectly
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"        # Restores http://127.0.0.1/
+      - "443:443/tcp"
+      - "3000:3000/tcp"
     volumes:
       - ./workdir:/opt/adguardhome/work:Z
       - ./confdir:/opt/adguardhome/conf:Z
     environment:
       - TZ=Asia/Kolkata
+    networks:
+      - privacy-net
+
+  dnscrypt-proxy:
+    image: docker.io/klutchell/dnscrypt-proxy:latest
+    container_name: dnscrypt-proxy
+    restart: unless-stopped
+    # Tightly locks dnscrypt into adguardhome's network interface
+    network_mode: "container:adguardhome"
+    volumes:
+      - ./dnscrypt-proxy.toml:/config/dnscrypt-proxy.toml:Z
+      - ./dnscrypt-data:/config/data:Z
     depends_on:
-      - dnscrypt-proxy
+      - adguardhome
+
+networks:
+  privacy-net:
+    external: true
