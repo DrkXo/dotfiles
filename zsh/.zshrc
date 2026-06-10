@@ -56,6 +56,9 @@ export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/29.0.14033849"
 export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/emulator"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin/:$ANDROID_HOME/cmdline-tools/latest/bin/"
 
+
+#Flutter
+export PATH="/home/drkxo/fvm/bin:$PATH"
 export PATH="$PATH:$HOME/SDK/flutter/bin"
 export PATH="$PATH:$HOME/.pub-cache/bin"
 export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
@@ -218,24 +221,9 @@ bindkey '^[[1;5C' forward-word
 bindkey '^[[5C'    forward-word        # alternate sequence
 export XDG_CURRENT_DESKTOP=KDE
 
+# Added by Antigravity CLI installer
+export PATH="/home/drkxo/.local/bin:$PATH"
 
-
-
-
-
-
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'micromamba shell init' !!
-export MAMBA_EXE='/home/drkxo/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/drkxo/micromamba';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
 
 
 # # zellij auto start with shell
@@ -249,3 +237,55 @@ unset __mamba_setup
 #
 #     [[ "$ans" =~ ^[Yy]$ ]] && exec zellij attach --create "${USER}"
 # fi
+
+
+
+# #
+# # >>> mamba initialize >>>
+# # !! Contents within this block are managed by 'mamba shell init' !!
+# export MAMBA_EXE='/home/drkxo/miniforge3/bin/mamba';
+# export MAMBA_ROOT_PREFIX='/home/drkxo/miniforge3';
+# __mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__mamba_setup"
+# else
+#     alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+# fi
+# unset __mamba_setup
+# # <<< mamba initialize <<<
+#
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/home/drkxo/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/drkxo/miniforge3/etc/profile.d/conda.sh" ]; then
+#         . "/home/drkxo/miniforge3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/drkxo/miniforge3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+#
+
+
+export PATH="$HOME/miniforge3/bin:$PATH"
+
+__mamba_init() {
+    unset -f conda mamba
+
+    source "$HOME/miniforge3/etc/profile.d/conda.sh"
+    eval "$("$HOME/miniforge3/bin/mamba" shell hook --shell zsh)"
+}
+
+conda() {
+    __mamba_init
+    conda "$@"
+}
+
+mamba() {
+    __mamba_init
+    mamba "$@"
+}
