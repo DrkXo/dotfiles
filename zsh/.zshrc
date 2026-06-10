@@ -125,7 +125,9 @@ alias winerun="$winegpu wine"
 
 # Flutter
 alias brb='dart run build_runner build --delete-conflicting-outputs'
-alias ff='flutter clean && flutter pub get'
+alias fbrb='fvm dart run build_runner build --delete-conflicting-outputs'
+
+alias fff='fvm flutter clean && fvm flutter pub get'
 
 # Audio share
 alias audio_share="$HOME/Apps/audio-share-server-cmd/bin/as-cmd -b"
