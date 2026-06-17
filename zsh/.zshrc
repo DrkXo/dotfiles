@@ -59,7 +59,8 @@ export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin/:$ANDROID_HOME/cmdline
 
 #Flutter
 export PATH="/home/drkxo/fvm/bin:$PATH"
-export PATH="$PATH:$HOME/SDK/flutter/bin"
+# export PATH="$PATH:$HOME/SDK/flutter/bin"
+export PATH="$PATH:$HOME/fvm/versions/3.44.2/bin"
 export PATH="$PATH:$HOME/.pub-cache/bin"
 export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
