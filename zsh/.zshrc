@@ -7,6 +7,11 @@ export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=100000
 export SAVEHIST=100000
 
+
+#for ssh agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+
 # Good history behavior
 setopt hist_ignore_dups      # no duplicate commands
 setopt hist_ignore_space     # ignore commands starting with space
