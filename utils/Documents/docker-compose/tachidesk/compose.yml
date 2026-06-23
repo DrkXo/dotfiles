@@ -24,7 +24,7 @@ services:
     container_name: suwayomi2
     environment:
       - DOWNLOAD_AS_CBZ=true
-      - EXTENSION_REPOS=["https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"]
+      - EXTENSION_REPOS=["https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json","https://raw.githubusercontent.com/yuzono/cursed-manga-repo/repo/index.min.json"]
       - TZ=Etc/UTC
       - WEB_UI_ENABLED=true
       - WEB_UI_FLAVOR=WebUI
