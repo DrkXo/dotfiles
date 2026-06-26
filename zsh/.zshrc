@@ -172,6 +172,20 @@ merge_ts() {
 }
 
 
+### Flutter build with hooks so that gradle stops
+
+fbuild() {
+    flutter build "$@"
+    local rc=$?
+
+    (
+        cd android || return
+        ./gradlew --stop >/dev/null 2>&1
+    )
+
+    return $rc
+}
+
 
 # # ---------------------------------------------------------
 # ### 5. Prompt (Oh My Posh)
