@@ -1,0 +1,29 @@
+services:
+  i2p:
+    # image: docker.io/geti2p/i2p:latest
+    image: docker.io/geti2p/i2p:i2p-2.10.0
+    container_name: i2p
+    restart: unless-stopped
+
+    environment:
+      TZ: ${TZ}
+      JVM_XMX: ${JVM_XMX}
+      EXT_PORT: ${EXT_PORT}
+
+    volumes:
+      - ./data/config:/i2p/.i2p
+      - ./data/torrents:/i2psnark
+
+    ports:
+      - "127.0.0.1:7657:7657"      # Router Console
+      - "127.0.0.1:4444:4444"      # HTTP Proxy
+      - "127.0.0.1:6668:6668"      # IRC Proxy
+      - "${EXT_PORT}:12345/tcp"
+      - "${EXT_PORT}:12345/udp"
+
+    networks:
+      - privacy-net
+
+networks:
+  privacy-net:
+    external: true
