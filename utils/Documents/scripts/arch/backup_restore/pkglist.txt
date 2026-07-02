@@ -31,6 +31,7 @@ cmake
 cnrdrvcups-lb
 cockpit
 croc
+crow-translate
 cups-pdf
 darkly-bin
 dbeaver
@@ -53,8 +54,10 @@ gearlever
 gimp
 git
 github-cli
+gitlab-ci-local
 gitlogue
 glab
+go-yq
 goaccess
 google-chrome
 goverlay
@@ -63,6 +66,7 @@ grub
 gst-plugin-pipewire
 gvfs
 gwenview
+hacker-news-tui-bin
 haruna
 hostapd
 htop
@@ -114,8 +118,6 @@ networkmanager-openconnect
 networkmanager-strongswan
 nfs-utils
 ninja
-niri
-noctalia-shell
 ntfs-3g
 nvidia-580xx-dkms
 nvidia-580xx-settings
@@ -160,8 +162,10 @@ switcheroo-control
 system-config-printer
 systemd-resolvconf
 timidity++
+translate-shell
 trash-cli
 ttf-fira-code
+ttf-iosevka-nerd
 ttf-jetbrains-mono
 ttf-ubuntu-font-family
 tuned
@@ -183,6 +187,7 @@ winetricks
 wireguard-tools
 wireless_tools
 wireplumber
+xclip
 xdg-utils
 xdotool
 xorg-xinit

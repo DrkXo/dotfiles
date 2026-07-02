@@ -10,7 +10,9 @@ dwarfs-bin
 dwarfs-bin-debug
 fastlane
 fastlane-debug
+gitlab-ci-local
 gosuki-debug
+hacker-news-tui-bin
 invidtui-bin-debug
 kde-material-you-colors-debug
 lazysql-bin-debug
