@@ -12,6 +12,10 @@ export SAVEHIST=100000
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 
+# for go binaries
+export PATH="$HOME/go/bin:$PATH"
+
+
 # Good history behavior
 setopt hist_ignore_dups      # no duplicate commands
 setopt hist_ignore_space     # ignore commands starting with space
