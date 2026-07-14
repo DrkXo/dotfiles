@@ -1,0 +1,45 @@
+[Android Emulator]
+Description=Android Emulator
+ignoregeometry=true
+ignoregeometryrule=3
+position=1209,90
+positionrule=3
+wmclass=qemu-system-x86_64 Emulator
+wmclasscomplete=true
+wmclassmatch=1
+
+[Settings for code code]
+Description=Settings for code code
+ignoregeometry=true
+ignoregeometryrule=3
+position=0,34
+positionrule=3
+size=1197,903
+sizerule=3
+wmclass=code code
+wmclasscomplete=true
+wmclassmatch=1
+
+[Settings for konsole org.kde.konsole]
+Description=Settings for konsole org.kde.konsole
+ignoregeometry=true
+ignoregeometryrule=3
+position=476,34
+positionrule=3
+size=1194,905
+sizerule=3
+wmclass=konsole org.kde.konsole
+wmclasscomplete=true
+wmclassmatch=1
+
+[Window settings for Picture in picture]
+Description=Window settings for Picture in picture
+above=true
+aboverule=2
+skiptaskbar=true
+skiptaskbarrule=2
+title=Picture in picture
+titlematch=1
+types=1
+wmclass=brave
+wmclassmatch=1
