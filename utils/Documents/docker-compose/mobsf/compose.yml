@@ -6,7 +6,7 @@ services:
     user: root
 
     ports:
-      - "8000:8000"
+      - "8999:8000"
 
     stdin_open: true
     tty: true
@@ -15,6 +15,12 @@ services:
       - seccomp=unconfined
 
     restart: unless-stopped
-
+    networks:
+      - privacy-net
     volumes:
       - ./mobsf_data:/home/mobsf/.MobSF
+
+
+networks:
+  privacy-net:
+    external: true

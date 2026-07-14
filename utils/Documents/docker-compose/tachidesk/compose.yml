@@ -38,3 +38,8 @@ services:
     restart: unless-stopped
     # depends_on:
     #   - flaresolverr
+    networks:
+      - privacy-net
+networks:
+  privacy-net:
+    external: true

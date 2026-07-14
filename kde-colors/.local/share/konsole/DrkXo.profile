@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=VoidMoss
-Font=VictorMono Nerd Font,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+Font=JetBrains Mono Light,12,-1,5,300,0,0,0,0,0,0,0,0,0,0,1,Regular,0,0
 
 [General]
 Command=/usr/bin/zsh
