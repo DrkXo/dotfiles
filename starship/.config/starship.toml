@@ -1,308 +1,183 @@
-"$schema" = 'https://starship.rs/config-schema.json'
+palette = "grey"
+format = """$username$hostname$directory$fill[$all](grey)$time$line_break$character"""
 
-[aws]
-symbol = " "
+# ── Shell interaction ──────────────────────────────────────────────
 
-[azure]
-symbol = " "
+[character]
+success_symbol = "[@](bold green)"
+error_symbol = "[@](bold red)"
 
-[battery]
-full_symbol = "󰁹 "
-charging_symbol = "󰂄 "
-discharging_symbol = "󰂃 "
-unknown_symbol = "󰂑 "
-empty_symbol = "󰂎 "
+[fill]
+symbol = '─'
+style = '#222222'
 
-[buf]
-symbol = " "
+# ── Context modules ────────────────────────────────────────────────
 
-[bun]
-symbol = " "
-
-[c]
-symbol = " "
-
-[cpp]
-symbol = " "
-
-[cmake]
-symbol = " "
-
-[cobol]
-symbol = " "
-
-[conda]
-symbol = " "
-
-[container]
-symbol = " "
-
-[crystal]
-symbol = " "
-
-[dart]
-symbol = " "
-
-[deno]
-symbol = " "
-
-[direnv]
-symbol = " "
-
-[directory]
-read_only = " 󰌾"
-
-[docker_context]
-symbol = " "
-
-[dotnet]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
-[erlang]
-symbol = " "
-
-[fennel]
-symbol = " "
-
-[fortran]
-symbol = " "
-
-[fossil_branch]
-symbol = " "
-
-[gcloud]
-symbol = "󱇶 "
-
-[gleam]
-symbol = " "
-
-[git_branch]
-symbol = " "
-
-[git_commit]
-tag_symbol = '  '
-
-[golang]
-symbol = " "
-
-[gradle]
-symbol = " "
-
-[guix_shell]
-symbol = " "
-
-[haskell]
-symbol = " "
-
-[haxe]
-symbol = " "
-
-[helm]
-symbol = " "
-
-[hg_branch]
-symbol = " "
+[username]
+style_user = "#777777"
+style_root = "bold #777777"
+format = "[$user]($style)"
+show_always = false
 
 [hostname]
-ssh_symbol = " "
+ssh_only = true
+style = "#777777"
+format = "[$hostname]($style)"
+disabled = false
 
-[java]
-symbol = " "
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "#777777"
+format = "[$path]($style)"
 
-[julia]
-symbol = " "
+[shell]
+disabled = true
 
-[kotlin]
-symbol = " "
+# ── Time ────────────────────────────────────────────────────────────
 
-[kubernetes]
-symbol = "󱃾 "
+[time]
+disabled = false
+time_format = "%F %T"
+style = "#444444"
+format = '[$time]($style)'
 
-[lua]
-symbol = " "
+# ── Command duration ──────────────────────────────────────────────
 
-[maven]
-symbol = " "
+[cmd_duration]
+min_time = 10000
+style = "#777777"
+format = "[⏱ $duration]($style)"
 
-[memory_usage]
-symbol = "󰍛 "
+# ── Git modules ────────────────────────────────────────────────────
 
-[meson]
-symbol = "󰔷 "
+[git_branch]
+symbol = "git "
+# style = "#777777"
+# format = "[$symbol$branch]($style)"
 
-[mojo]
-symbol = "󰈸 "
+# [git_status]
+# style = "#777777"
+# format = "[$all_status$ahead_behind]($style)"
+# conflicted = "≠"
+# ahead = "⇡"
+# behind = "⇣"
+# diverged = "⇕"
+# up_to_date = ""
 
-[nats]
-symbol = " "
+# [git_commit]
+# style = "#777777"
+# format = "[$hash]($style)"
 
-[netns]
-symbol = "󰛳 "
+# [git_state]
+# style = "#777777"
+# format = '[\($state( $progress_current of $progress_total)\)]($style)'
 
-[nim]
-symbol = " "
-
-[nix_shell]
-symbol = " "
+# ── Language runtimes ──────────────────────────────────────────────
 
 [nodejs]
-symbol = " "
-
-[ocaml]
-symbol = " "
-
-[odin]
-symbol = "󰟢 "
-
-[opa]
-symbol = " "
-
-[openstack]
-symbol = " "
-
-[os.symbols]
-AIX = " "
-AlmaLinux = " "
-Alpaquita = " "
-Alpine = " "
-ALTLinux = " "
-Amazon = " "
-Android = " "
-AOSC = " "
-Arch = " "
-Artix = " "
-Bluefin = " "
-CachyOS = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Elementary = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = " "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = " "
-InstantOS = " "
-Ios = "󰀷 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-Nobara = " "
-OpenBSD = " "
-OpenCloudOS = " "
-openEuler = " "
-openSUSE = " "
-OracleLinux = "󰺡 "
-PikaOS = " "
-Pop = " "
-Raspbian = " "
-Redhat = "󱄛 "
-RedHatEnterprise = "󱄛 "
-Redox = "󰀘 "
-RockyLinux = " "
-Solus = " "
-SUSE = " "
-Ubuntu = " "
-Ultramarine = " "
-Unknown = " "
-Uos = " "
-Void = " "
-Windows = "󰍲 "
-Zorin = " "
-
-[package]
-symbol = "󰏗 "
-
-[perl]
-symbol = " "
-
-[php]
-symbol = " "
-
-[pijul_channel]
-symbol = " "
-
-[pixi]
-symbol = "󰏗 "
-
-[pulumi]
-symbol = " "
-
-[purescript]
-symbol = " "
-
-[python]
-symbol = " "
-
-[raku]
-symbol = "󱖊 "
-
-[red]
-symbol = "󱍼 "
-
-[rlang]
-symbol = "󰟔 "
-
-[ruby]
-symbol = " "
+symbol = "node "
+style = "#777777"
+format = "[$symbol($version )]($style)"
 
 [rust]
-symbol = "󱘗 "
+symbol = "rs "
+style = "#777777"
+format = "[$symbol($version )]($style)"
 
-[scala]
-symbol = " "
+[golang]
+symbol = "go "
+style = "#777777"
+format = "[$symbol($version )]($style)"
 
-[shlvl]
-symbol = "󰹍 "
+[python]
+symbol = "py "
+style = "#777777"
+format = "[$symbol($version )]($style)"
 
-[singularity]
-symbol = " "
+# ── Cloud / DevOps ────────────────────────────────────────────────
 
-[solidity]
-symbol = " "
+[aws]
+symbol = "aws "
+style = "#777777"
+format = "[$symbol($profile )]($style)"
 
-[spack]
-symbol = " "
+[gcloud]
+symbol = "gcp "
+style = "#777777"
+format = "[$symbol($active )]($style)"
 
-[status]
-symbol = " "
-
-[sudo]
-symbol = " "
-
-[swift]
-symbol = " "
+[kubernetes]
+symbol = "k8s "
+style = "#777777"
+format = '[$symbol\($context\)]($style)'
 
 [terraform]
-symbol = " "
+symbol = "tf "
+style = "#777777"
+format = "[$symbol($workspace)]($style)"
 
-[vlang]
-symbol = " "
+# ── Package management ────────────────────────────────────────────
 
-[typst]
-symbol = " "
+[package]
+symbol = "package "
+style = "#777777"
+format = "[$symbol$version]($style)"
 
-[vagrant]
-symbol = " "
+# ── System modules ────────────────────────────────────────────────
 
-[xmake]
-symbol = " "
+[jobs]
+symbol = "⚙ "
+style = "#777777"
+format = "[$symbol$number]($style)"
+threshold = 1
 
-[zig]
-symbol = " "
+[memory_usage]
+disabled = true
+
+[battery]
+disabled = true
+
+[shlvl]
+style = "#777777"
+format = "[$shlvl]($style)"
+threshold = 2
+
+# ── Palette (all colours mapped to a single grey) ─────────────────
+
+[palettes.grey]
+grey = "#777777"
+none = "#777777"
+white = "#777777"
+rosewater = "#777777"
+flamingo = "#777777"
+pink = "#777777"
+mauve = "#777777"
+maroon = "#777777"
+peach = "#777777"
+sky = "#777777"
+sapphire = "#777777"
+blue = "#777777"
+lavender = "#777777"
+text = "#777777"
+subtext1 = "#777777"
+subtext0 = "#777777"
+overlay2 = "#777777"
+overlay1 = "#777777"
+overlay0 = "#777777"
+surface2 = "#777777"
+surface1 = "#777777"
+surface0 = "#777777"
+base = "#777777"
+mantle = "#777777"
+crust = "#777777"
+background = "#777777"
+current_line = "#777777"
+foreground = "#777777"
+comment = "#777777"
+cyan = "#777777"
+green = "#777777"
+orange = "#777777"
+purple = "#777777"
+red = "#777777"
+yellow = "#777777"
