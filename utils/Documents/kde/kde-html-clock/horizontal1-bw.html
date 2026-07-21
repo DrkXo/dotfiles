@@ -1,0 +1,48 @@
+<!-- https://github.com/MarcinOrlowski/html-clock-plasmoid/discussions/154 -->
+
+<body style="margin:0;padding:0;font-family:'Adwaita Mono';">
+<table style="border-spacing:0;margin-top:-3px;">
+
+<tr>
+
+  <!-- TIME -->
+  <td valign="middle" align="right" style="padding:0;line-height:0.9;">
+  <span style="font-size:24px;font-weight:bold;line-height:24;"
+>{kk}<
+    span style="color:{cycle|#4fa300|#2d6e00};font-family:'Noto Sans'"
+>:<
+   /span
+>{ii}<
+  /span><td valign="middle" align="left" style="padding:0;line-height:0.8;">
+  <div style="font-size:12px;"
+>{ss}<
+  /div><div style="font-size:12px;color:white;font-weight:bold;"
+>{AA}<
+/div></td>
+
+
+  <!-- ANIMATION -->
+  <td valign="middle" style="padding:0;">
+  <span style="font-size:24px;text-align:center;"
+>{cycle|◉|○}<
+  /span></td>
+
+  <!-- DATE -->
+  <td valign="middle" align="left" style="padding:0;line-height:0.7;">
+
+  <div style="font-size:15px;font-weight:bold;color:white;"
+>{DDD|U}<
+  /div>
+
+  <div style="font-size:15px;">
+   <span style="font-weight:bold;"
+>{dd}<
+  /span>
+  <span style="color:white;"
+>{MM|U}<
+  /span>
+  </div></td>
+
+</tr>
+</table>
+</body>
