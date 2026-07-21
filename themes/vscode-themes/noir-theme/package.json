@@ -1,0 +1,45 @@
+{
+	"name": "noir-m-theme",
+	"displayName": "Noir M.",
+	"description": "A dark, earthy color theme that brings the calm of moss-covered stone to your code",
+	"version": "1.0.0",
+	"publisher": "DrkXo",
+	"engines": {
+		"vscode": "^1.74.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"keywords": [
+		"theme",
+		"color-theme",
+		"dark theme",
+		"noir m",
+		"moss",
+		"earthy",
+		"minimal",
+		"green"
+	],
+	"galleryBanner": {
+		"color": "#0d0d0d",
+		"theme": "dark"
+	},
+	"contributes": {
+		"themes": [
+			{
+				"label": "Noir M.",
+				"uiTheme": "vs-dark",
+				"path": "./themes/noir-m-color-theme.json"
+			}
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DrkXo/noir-m-theme"
+	},
+	"bugs": {
+		"url": "https://github.com/DrkXo/noir-m-theme/issues"
+	},
+	"homepage": "https://github.com/DrkXo/noir-m-theme#readme",
+	"license": "MIT"
+}

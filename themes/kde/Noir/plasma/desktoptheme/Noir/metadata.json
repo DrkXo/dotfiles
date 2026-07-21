@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "drkxo"
+            }
+        ],
+        "Category": "",
+        "Description": "Noir Theme",
+        "EnabledByDefault": true,
+        "Id": "Noir",
+        "License": "LGPL",
+        "Name": "Noir",
+        "Version": "1.1",
+        "Website": ""
+    },
+    "X-Plasma-API": "5.0"
+}
