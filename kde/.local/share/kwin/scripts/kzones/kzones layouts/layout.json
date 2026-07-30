@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Priority Grid",
+    "padding": 8,
+    "zones": [
+      {
+        "x": 0,
+        "y": 0,
+        "height": 100,
+        "width": 25
+      },
+      {
+        "x": 25,
+        "y": 0,
+        "height": 100,
+        "width": 50
+      },
+      {
+        "x": 75,
+        "y": 0,
+        "height": 100,
+        "width": 25
+      }
+    ]
+  },
+  {
+    "name": "Quadrant Grid",
+    "padding": 8,
+    "zones": [
+      {
+        "x": 0,
+        "y": 0,
+        "height": 50,
+        "width": 50
+      },
+      {
+        "x": 0,
+        "y": 50,
+        "height": 50,
+        "width": 50
+      },
+      {
+        "x": 50,
+        "y": 50,
+        "height": 50,
+        "width": 50
+      },
+      {
+        "x": 50,
+        "y": 0,
+        "height": 50,
+        "width": 50
+      }
+    ]
+  },
+  {
+    "name": "Master & Stack",
+    "padding": 8,
+    "zones": [
+      {
+        "x": 0,
+        "y": 0,
+        "height": 100,
+        "width": 60
+      },
+      {
+        "x": 60,
+        "y": 0,
+        "height": 50,
+        "width": 40
+      },
+      {
+        "x": 60,
+        "y": 50,
+        "height": 50,
+        "width": 40
+      }
+    ]
+  },
+  {
+    "name": "2 Grid",
+    "padding": 8,
+    "zones": [
+      {
+        "x": 0,
+        "y": 0,
+        "height": 100,
+        "width": 50
+      },
+      {
+        "x": 50,
+        "y": 0,
+        "height": 100,
+        "width": 50
+      }
+    ]
+  },
+  {
+    "name": "Master & Stack (Reverse)",
+    "padding": 8,
+    "zones": [
+      {
+        "x": 0,
+        "y": 0,
+        "height": 50,
+        "width": 40
+      },
+      {
+        "x": 0,
+        "y": 50,
+        "height": 50,
+        "width": 40
+      },
+      {
+        "x": 40,
+        "y": 0,
+        "height": 100,
+        "width": 60
+      }
+    ]
+  }
+]
