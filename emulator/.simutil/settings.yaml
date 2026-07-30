@@ -1,0 +1,132 @@
+# Simutil configuration
+#
+# Press <e> in the app to open this file in your default editor.
+# Plugin changes apply after restart (or press <r> to refresh devices).
+
+theme: dark
+last_selected_device_id: emulator-5554
+
+# Plugins
+#
+# Define external shell-command plugins here. Each plugin groups one or more
+# commands. In the app press <p> on a selected device to pick a plugin and then
+# a command to run. You can also give a command a "shortcut" to run it directly.
+#
+# Template variables available in "args":
+#   {device.id}, {device.name}, {device.platform}, {device.os}, {device.state}
+#
+# Command fields:
+#   id, label            (required) identity shown in the menu
+#   command              (required) executable to run
+#   args                 (optional) list of arguments, supports templates
+#   description          (optional) help text shown under the label
+#   platforms            (optional) [android, ios] filter; empty = any
+#   requires_running     (optional) only show when the device is running
+#   mode                 (optional) detached (default) | inherit
+#   shortcut             (optional) single key to run this command directly
+
+plugins:
+  - id: mitmproxy
+    label: mitmproxy
+    description: Enable or disable emulator HTTP proxy
+    commands:
+      - id: enable
+        label: Enable Proxy
+        command: adb
+        args:
+          - -s
+          - "{device.id}"
+          - shell
+          - settings
+          - put
+          - global
+          - http_proxy
+          - "10.0.2.2:8080"
+        platforms: [android]
+        requires_running: true
+        mode: inherit
+      - id: disable
+        label: Disable Proxy
+        command: adb
+        args:
+          - -s
+          - "{device.id}"
+          - shell
+          - settings
+          - put
+          - global
+          - http_proxy
+          - ":0"
+        platforms: [android]
+        requires_running: true
+        mode: inherit
+      - id: status
+        label: Proxy Status
+        command: adb
+        args:
+          - -s
+          - "{device.id}"
+          - shell
+          - settings
+          - get
+          - global
+          - http_proxy
+        platforms: [android]
+        requires_running: true
+        mode: inherit
+  - id: emulator-local-dns
+    label: Emulator + Local DNS
+    description: Launch emulators with local dns
+    availability:
+      command: emulator
+      args: [-help]
+    commands:
+      - id: launch-pixel-9a
+        label: Launch Pixel 9a (Port 5554 + Local DNS)
+        command: emulator
+        # Each space-separated argument must be its own item in the list
+        # args: [-avd, "Pixel_9a", -port, "5554", -dns-server, "127.0.0.1"]
+        # Example of a dynamic launcher:
+        args: [-avd, "{device.name}", -port, "5554", -dns-server, "127.0.0.1"]
+        platforms: [android]
+        requires_running: false
+        mode: detached
+  - id: adb-tools
+    label: ADB Tools
+    commands:
+      - id: logcat
+        label: Logcat
+        command: adb
+        args:
+          - -s
+          - "{device.id}"
+          - logcat
+        platforms: [android]
+        requires_running: true
+        mode: inherit
+        shortcut: l
+
+  - id: scrcpy
+    label: scrcpy
+    description: Screen mirroring and control for Android
+    availability:
+      command: scrcpy
+      args: [--version]
+    commands:
+      - id: mirror
+        label: Screen Mirror
+        description: Mirror the device screen
+        command: scrcpy
+        args: [-s, "{device.id}"]
+        platforms: [android]
+        requires_running: true
+        mode: detached
+        shortcut: s
+      - id: mirror-no-audio
+        label: Screen Mirror (No Audio)
+        description: Mirror without forwarding audio
+        command: scrcpy
+        args: [-s, "{device.id}", --no-audio]
+        platforms: [android]
+        requires_running: true
+        mode: detached
