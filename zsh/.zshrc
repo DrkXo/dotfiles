@@ -273,3 +273,6 @@ mamba() {
 }
 
 
+
+# simutil
+export PATH="/home/drkxo/.local/lib/simutil:$PATH"
