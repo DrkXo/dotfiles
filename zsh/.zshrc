@@ -14,11 +14,11 @@ setopt no_hist_beep          # Prevent beep on history boundary
 
 # Directory navigation & usability options
 # setopt auto_cd             # Disabled so all dir changes route through zoxide
-setopt auto_pushd           # Make cd push old directory to stack
-setopt pushd_ignore_dups    # Don't push duplicates to directory stack
-setopt pushd_silent         # Hide directory stack output on cd
-setopt rm_star_silent       # Don't prompt confirmation when running `rm path/*`
-setopt interactive_comments # Allow comments (#) in interactive shell prompts
+setopt auto_pushd            # Make cd push old directory to stack
+setopt pushd_ignore_dups     # Don't push duplicates to directory stack
+setopt pushd_silent          # Hide directory stack output on cd
+setopt rm_star_silent        # Don't prompt confirmation when running `rm path/*`
+setopt interactive_comments  # Allow comments (#) in interactive shell prompts
 
 
 ### ---------------------------------------------------------
@@ -105,12 +105,15 @@ zinit light starship/starship
 # Load completion definitions before running compinit
 zinit light zsh-users/zsh-completions
 
-# Optimized compinit call (uses cache if less than 24h old)
+# Lightning fast compinit initialization (uses compiled zcompdump)
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m+1) ]]; then
-  compinit
-else
+ZCOMPDUMP="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -s "$ZCOMPDUMP" && (! -s "${ZCOMPDUMP}.zc" || "$ZCOMPDUMP" -nt "${ZCOMPDUMP}.zc") ]]; then
   compinit -C
+  zcompile "$ZCOMPDUMP"
+else
+  compinit
+  zcompile "$ZCOMPDUMP"
 fi
 
 zmodload zsh/complist
@@ -152,6 +155,11 @@ alias grep="grep --color=auto"
 alias r="source ~/.zshrc"
 alias mkdir="mkdir -p"
 
+# Safe rm safeguard (prefers trash-cli if installed, falls back to rm)
+if command -v trash-put &>/dev/null; then
+  alias rm="trash-put"
+fi
+
 # Git
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias gs='git status'
@@ -183,12 +191,38 @@ alias batt60='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:0
 alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker'
 alias zj='zellij attach --create "${USER}"'
+alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents"
 
 # --- Functions ---
-# Interactive sub-directory navigation with fzf
+# Fast sub-directory navigation (uses fd-find if available)
 fd() {
   local dir
-  dir=$(find ${1:-.} -path '*/.*' -prune -o -type d -print 2> /dev/null | fzf +m) && cd "$dir"
+  if command -v fd &>/dev/null; then
+    dir=$(command fd --type d --hidden --exclude .git | fzf +m) && cd "$dir"
+  else
+    dir=$(find "${1:-.}" -maxdepth 4 \( -path '*/.*' -o -path '*/node_modules' \) -prune -o -type d -print 2>/dev/null | fzf +m) && cd "$dir"
+  fi
+}
+
+extract() {
+  if [ -f "$1" ] ; then
+    case "$1" in
+      *.tar.bz2)   tar xjf "$1"     ;;
+      *.tar.gz)    tar xzf "$1"     ;;
+      *.bz2)       bunzip2 "$1"     ;;
+      *.rar)       unrar e "$1"     ;;
+      *.gz)        gunzip "$1"      ;;
+      *.tar)       tar xf "$1"      ;;
+      *.tbz2)      tar xjf "$1"     ;;
+      *.tgz)       tar xzf "$1"     ;;
+      *.zip)       unzip "$1"       ;;
+      *.Z)         compress -d "$1" ;;
+      *.7z)        7z x "$1"        ;;
+      *)           echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
 }
 
 merge_ts() {
