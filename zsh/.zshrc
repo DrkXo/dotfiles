@@ -31,11 +31,12 @@ export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
 export XDG_CURRENT_DESKTOP="KDE"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
-# Keep PATH clean and remove duplicates automatically
-typeset -U path
+# Tie scalar PATH and array path together cleanly in Zsh
+typeset -U path PATH fpath FPATH
 
 path=(
   "$HOME/.local/bin"
+  "$HOME/.local/lib/simutil"
   "$HOME/.cargo/bin"
   "$HOME/go/bin"
   "$HOME/fvm/bin"
@@ -45,10 +46,9 @@ path=(
   "$ANDROID_HOME/platform-tools"
   "$ANDROID_HOME/emulator"
   "$ANDROID_HOME/cmdline-tools/latest/bin"
-  "$HOME/miniforge3/bin"
-  "$HOME/.local/lib/simutil"
-  $path
+  "$path[@]"
 )
+export PATH
 
 
 ### ---------------------------------------------------------
@@ -66,18 +66,11 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Zinit Annexes
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
 
 ### ---------------------------------------------------------
 ### 4. BINARIES MANAGED BY ZINIT
 ### ---------------------------------------------------------
-# Install & manage eza directly from GitHub releases
+# Install & manage eza
 zinit ice as"command" from"gh-r" pick"eza" \
   atload'
     alias ls="eza --icons=auto --hyperlink --color=auto"
@@ -87,64 +80,67 @@ zinit ice as"command" from"gh-r" pick"eza" \
   '
 zinit light eza-community/eza
 
-# Install & manage bat directly from GitHub releases
+# Install & manage bat
 zinit ice as"command" from"gh-r" pick"bat/*/bat" \
   atload'alias cat="bat --style=plain"'
 zinit light sharkdp/bat
 
-# Install & manage Starship prompt with relative path generation
+# Install & manage Starship prompt
 zinit ice as"command" from"gh-r" pick"starship" \
-  atclone"./starship init zsh > init.zsh; zcompile init.zsh" \
-  atpull"%atclone" src"init.zsh"
+    atclone"./starship init zsh > init.zsh; zcompile init.zsh" \
+    atpull"%atclone" src"init.zsh"
 zinit light starship/starship
 
 
 ### ---------------------------------------------------------
 ### 5. PLUGINS & COMPLETION
 ### ---------------------------------------------------------
-# Load completion definitions before running compinit
+# 1. Completion engine setup
 zinit light zsh-users/zsh-completions
 
-# Lightning fast compinit initialization (uses compiled zcompdump)
 autoload -Uz compinit
 ZCOMPDUMP="${ZDOTDIR:-$HOME}/.zcompdump"
 if [[ -s "$ZCOMPDUMP" && (! -s "${ZCOMPDUMP}.zc" || "$ZCOMPDUMP" -nt "${ZCOMPDUMP}.zc") ]]; then
-  compinit -C
+  compinit -u
   zcompile "$ZCOMPDUMP"
 else
-  compinit
-  zcompile "$ZCOMPDUMP"
+  compinit -u
 fi
 
 zmodload zsh/complist
 zstyle ':completion:*' menu select
 
-# History Substring Search
-zinit ice wait"0a" lucid atload'
-    bindkey "^[[A" history-substring-search-up
-    bindkey "^[[B" history-substring-search-down
-    bindkey "${terminfo[kcuu1]}" history-substring-search-up
-    bindkey "${terminfo[kcud1]}" history-substring-search-down
-'
-zinit light zsh-users/zsh-history-substring-search
+# 2. Critical synchronous UI components (Loaded before prompt renders)
+zinit light zsh-users/zsh-autosuggestions
 
-# Smart Directory Navigation (Zoxide overriding standard cd)
+# Fast fzf-tab loading with compiled C-helpers
+zinit ice compile"lib/*"
+zinit light Aloxaf/fzf-tab
+
+zstyle ':fzf-tab:complete:*' fzf-preview \
+    'if [[ -d $realpath ]]; then eza -1 --icons=auto --color=always $realpath; elif [[ -f $realpath ]]; then bat --color=always --style=header,grid $realpath 2>/dev/null || cat $realpath; fi'
+
+# 3. Smart Directory Navigation
 zinit ice as"command" from"gh-r" pick"zoxide" atload'eval "$(zoxide init zsh --cmd cd)"'
 zinit light ajeetdsouza/zoxide
 
-# Deferred interactive enhancement plugins (Turbo Mode)
-zinit wait"0a" lucid light-mode for \
-    Aloxaf/fzf-tab \
-    zsh-users/zsh-autosuggestions \
+# 4. Deferred Plugins & Annexes (Background loading - 0ms prompt delay)
+zinit wait"0" lucid light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust \
+    zsh-users/zsh-history-substring-search \
     zdharma-continuum/fast-syntax-highlighting \
     MichaelAquilina/zsh-you-should-use \
     hlissner/zsh-autopair \
     wfxr/forgit
 
-# Rich fzf-tab completion previews (Directory eza tree / File syntax preview)
-zstyle ':fzf-tab:complete:*' fzf-preview \
-    'if [[ -d $realpath ]]; then eza -1 --icons=auto --color=always $realpath; elif [[ -f $realpath ]]; then bat --color=always --style=header,grid $realpath 2>/dev/null || cat $realpath; fi'
-
+# Bind keys for history substring search (will active as soon as background queue finishes)
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
+bindkey "${terminfo[kcuu1]}" history-substring-search-up
+bindkey "${terminfo[kcud1]}" history-substring-search-down
 
 ### ---------------------------------------------------------
 ### 6. ALIASES & FUNCTIONS
@@ -267,20 +263,18 @@ mamba() { __mamba_init; mamba "$@"; }
 ### ---------------------------------------------------------
 ### 7. KEYBINDINGS
 ### ---------------------------------------------------------
-# Default fallback arrow behavior (overridden by substring search once loaded)
-bindkey "${terminfo[kcuu1]}" up-line-or-history
-bindkey "${terminfo[kcud1]}" down-line-or-history
+# Standard horizontal navigation
 bindkey "${terminfo[kcub1]}" backward-char
 bindkey "${terminfo[kcuf1]}" forward-char
 
-# Menuselect keymap (completion menu)
+# Menuselect keymap (fzf-tab / completion menu navigation)
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^[[A' up-line-or-history
 bindkey -M menuselect '^[[B' down-line-or-history
 bindkey -M menuselect '^[[C' forward-char
 bindkey -M menuselect '^[[D' backward-char
 
-# Ctrl + Arrow keys word navigation
+# Ctrl + Arrow keys for word-by-word jumping
 bindkey '^[[1;5D' backward-word
 bindkey '^[[5D'   backward-word
 bindkey '^[[1;5C' forward-word
