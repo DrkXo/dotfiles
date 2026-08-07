@@ -205,25 +205,34 @@ fd() {
 }
 
 extract() {
-  if [ -f "$1" ] ; then
+  if [[ -f "$1" ]]; then
     case "$1" in
-      *.tar.bz2)   tar xjf "$1"     ;;
-      *.tar.gz)    tar xzf "$1"     ;;
-      *.bz2)       bunzip2 "$1"     ;;
-      *.rar)       unrar e "$1"     ;;
-      *.gz)        gunzip "$1"      ;;
-      *.tar)       tar xf "$1"      ;;
-      *.tbz2)      tar xjf "$1"     ;;
-      *.tgz)       tar xzf "$1"     ;;
-      *.zip)       unzip "$1"       ;;
-      *.Z)         compress -d "$1" ;;
-      *.7z)        7z x "$1"        ;;
-      *)           echo "'$1' cannot be extracted via extract()" ;;
+      *.tar.bz2|*.tbz2)
+        if command -v pv &>/dev/null; then pv "$1" | tar xjf -; else tar xvjf "$1"; fi ;;
+      *.tar.gz|*.tgz)
+        if command -v pv &>/dev/null; then pv "$1" | tar xzf -; else tar xvzf "$1"; fi ;;
+      *.tar)
+        if command -v pv &>/dev/null; then pv "$1" | tar xf -; else tar xvf "$1"; fi ;;
+      *.bz2)
+        if command -v pv &>/dev/null; then pv "$1" | bunzip2 > "${1%.bz2}"; else bunzip2 -v "$1"; fi ;;
+      *.gz)
+        if command -v pv &>/dev/null; then pv "$1" | gunzip > "${1%.gz}"; else gunzip -v "$1"; fi ;;
+      *.rar)
+        unrar x "$1" ;;
+      *.zip)
+        unzip "$1" ;;
+      *.Z)
+        compress -d "$1" ;;
+      *.7z)
+        7z x "$1" ;;
+      *)
+        echo "'$1' cannot be extracted via extract()" ;;
     esac
   else
     echo "'$1' is not a valid file"
   fi
 }
+
 
 merge_ts() {
   local out="${1:-output.ts}"
