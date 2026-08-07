@@ -88,11 +88,43 @@ zinit ice as"command" from"gh-r" bpick"*.tar.gz" mv"bat-* -> bat" pick"bat/bat" 
   atload'alias cat="bat --style=plain"'
 zinit light sharkdp/bat
 
-# Install & manage Starship prompt
-zinit ice as"command" from"gh-r" pick"starship" \
-    atclone"./starship init zsh > init.zsh; zcompile init.zsh" \
-    atpull"%atclone" src"init.zsh"
-zinit light starship/starship
+# # Install & manage Starship prompt
+# zinit ice as"command" from"gh-r" pick"starship" \
+#     atclone"./starship init zsh > init.zsh; zcompile init.zsh" \
+#     atpull"%atclone" src"init.zsh"
+# zinit light starship/starship
+
+
+# Install & manage Oh My Posh # zi delete oh-my-posh -y && exec zsh
+mkdir -p "$HOME/.config/ohmyposh"
+if [[ ! -f "$HOME/.config/ohmyposh/default.omp.json" ]]; then
+    curl -fsSL https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/uew.omp.json -o "$HOME/.config/ohmyposh/default.omp.json"
+fi
+
+# Install & manage Oh My Posh pointing to your custom/dotfile config
+# zinit ice as"command" id-as"oh-my-posh" pick"oh-my-posh" \
+#     atclone'
+#         curl -fsSL https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -o oh-my-posh
+#         chmod +x oh-my-posh
+#         ./oh-my-posh init zsh --config "$HOME/.config/ohmyposh/default.omp.json" > init.zsh
+#         zcompile init.zsh
+#     ' \
+#     atpull'%atclone' src"init.zsh"
+# zinit light zdharma-continuum/null
+
+zinit ice as"command" id-as"oh-my-posh" pick"oh-my-posh" \
+    atclone'
+        curl -fsSL https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -o oh-my-posh
+        chmod +x oh-my-posh
+    ' \
+    atpull'%atclone'
+zinit light zdharma-continuum/null
+
+# 2. Evaluate the config dynamically on shell startup
+if command -v oh-my-posh &> /dev/null; then
+  eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/default.omp.json")"
+fi
+
 
 
 ### ---------------------------------------------------------
@@ -192,6 +224,9 @@ alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:
 alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker'
 alias zj='zellij attach --create "${USER}"'
 alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents 2>/dev/null || pwd | wl-copy 2>/dev/null || pwd | xclip -selection clipboard 2>/dev/null"
+alias poshreload="zi delete oh-my-posh -y && exec zsh"
+
+
 
 # --- Functions ---
 fd() {
