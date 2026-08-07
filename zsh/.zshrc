@@ -13,7 +13,6 @@ setopt extended_history      # Save timestamps in history
 setopt no_hist_beep          # Prevent beep on history boundary
 
 # Directory navigation & usability options
-# setopt auto_cd             # Disabled so all dir changes route through zoxide
 setopt auto_pushd            # Make cd push old directory to stack
 setopt pushd_ignore_dups     # Don't push duplicates to directory stack
 setopt pushd_silent          # Hide directory stack output on cd
@@ -52,7 +51,7 @@ export PATH
 
 
 ### ---------------------------------------------------------
-### 3. ZINIT PLUGIN MANAGER
+### 3. ZINIT PLUGIN MANAGER & ANNEXES
 ### ---------------------------------------------------------
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -65,6 +64,9 @@ fi
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+
+# MUST be loaded synchronously BEFORE binary downloads use as"command"
+zinit light zdharma-continuum/zinit-annex-bin-gem-node
 
 
 ### ---------------------------------------------------------
@@ -80,8 +82,9 @@ zinit ice as"command" from"gh-r" pick"eza" \
   '
 zinit light eza-community/eza
 
-# Install & manage bat
-zinit ice as"command" from"gh-r" pick"bat/*/bat" \
+# Install & manage bat (Robust tar extraction & permission assignment)
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" mv"bat-* -> bat" pick"bat/bat" \
+  atclone"chmod +x bat/bat" atpull"%atclone" \
   atload'alias cat="bat --style=plain"'
 zinit light sharkdp/bat
 
@@ -104,13 +107,13 @@ if [[ -s "$ZCOMPDUMP" && (! -s "${ZCOMPDUMP}.zc" || "$ZCOMPDUMP" -nt "${ZCOMPDUM
   compinit -u
   zcompile "$ZCOMPDUMP"
 else
-  compinit -u
+  compinit -C -u
 fi
 
 zmodload zsh/complist
 zstyle ':completion:*' menu select
 
-# 2. Critical synchronous UI components (Loaded before prompt renders)
+# 2. Critical synchronous UI components
 zinit light zsh-users/zsh-autosuggestions
 
 # Fast fzf-tab loading with compiled C-helpers
@@ -124,23 +127,25 @@ zstyle ':fzf-tab:complete:*' fzf-preview \
 zinit ice as"command" from"gh-r" pick"zoxide" atload'eval "$(zoxide init zsh --cmd cd)"'
 zinit light ajeetdsouza/zoxide
 
-# 4. Deferred Plugins & Annexes (Background loading - 0ms prompt delay)
+# 4. Deferred Plugins & Annexes (Background loading)
 zinit wait"0" lucid light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust \
-    zsh-users/zsh-history-substring-search \
     zdharma-continuum/fast-syntax-highlighting \
     MichaelAquilina/zsh-you-should-use \
     hlissner/zsh-autopair \
     wfxr/forgit
 
-# Bind keys for history substring search (will active as soon as background queue finishes)
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
-bindkey "${terminfo[kcuu1]}" history-substring-search-up
-bindkey "${terminfo[kcud1]}" history-substring-search-down
+# Deferred Substring Search with internal keybind hooks
+zinit ice wait"0" lucid atload'
+    bindkey "^[[A" history-substring-search-up
+    bindkey "^[[B" history-substring-search-down
+    bindkey "${terminfo[kcuu1]}" history-substring-search-up
+    bindkey "${terminfo[kcud1]}" history-substring-search-down
+'
+zinit light zsh-users/zsh-history-substring-search
+
 
 ### ---------------------------------------------------------
 ### 6. ALIASES & FUNCTIONS
@@ -151,7 +156,6 @@ alias grep="grep --color=auto"
 alias r="source ~/.zshrc"
 alias mkdir="mkdir -p"
 
-# Safe rm safeguard (prefers trash-cli if installed, falls back to rm)
 if command -v trash-put &>/dev/null; then
   alias rm="trash-put"
 fi
@@ -187,10 +191,9 @@ alias batt60='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:0
 alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker'
 alias zj='zellij attach --create "${USER}"'
-alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents"
+alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents 2>/dev/null || pwd | wl-copy 2>/dev/null || pwd | xclip -selection clipboard 2>/dev/null"
 
 # --- Functions ---
-# Fast sub-directory navigation (uses fd-find if available)
 fd() {
   local dir
   if command -v fd &>/dev/null; then
@@ -203,38 +206,25 @@ fd() {
 extract() {
   if [[ -f "$1" ]]; then
     case "$1" in
-      *.tar.bz2|*.tbz2)
-        if command -v pv &>/dev/null; then pv "$1" | tar xjf -; else tar xvjf "$1"; fi ;;
-      *.tar.gz|*.tgz)
-        if command -v pv &>/dev/null; then pv "$1" | tar xzf -; else tar xvzf "$1"; fi ;;
-      *.tar)
-        if command -v pv &>/dev/null; then pv "$1" | tar xf -; else tar xvf "$1"; fi ;;
-      *.bz2)
-        if command -v pv &>/dev/null; then pv "$1" | bunzip2 > "${1%.bz2}"; else bunzip2 -v "$1"; fi ;;
-      *.gz)
-        if command -v pv &>/dev/null; then pv "$1" | gunzip > "${1%.gz}"; else gunzip -v "$1"; fi ;;
-      *.rar)
-        unrar x "$1" ;;
-      *.zip)
-        unzip "$1" ;;
-      *.Z)
-        compress -d "$1" ;;
-      *.7z)
-        7z x "$1" ;;
-      *)
-        echo "'$1' cannot be extracted via extract()" ;;
+      *.tar.bz2|*.tbz2) if command -v pv &>/dev/null; then pv "$1" | tar xjf -; else tar xvjf "$1"; fi ;;
+      *.tar.gz|*.tgz)  if command -v pv &>/dev/null; then pv "$1" | tar xzf -; else tar xvzf "$1"; fi ;;
+      *.tar)           if command -v pv &>/dev/null; then pv "$1" | tar xf -; else tar xvf "$1"; fi ;;
+      *.bz2)           if command -v pv &>/dev/null; then pv "$1" | bunzip2 > "${1%.bz2}"; else bunzip2 -v "$1"; fi ;;
+      *.gz)            if command -v pv &>/dev/null; then pv "$1" | gunzip > "${1%.gz}"; else gunzip -v "$1"; fi ;;
+      *.rar)           unrar x "$1" ;;
+      *.zip)           unzip "$1" ;;
+      *.Z)             compress -d "$1" ;;
+      *.7z)            7z x "$1" ;;
+      *)               echo "'$1' cannot be extracted via extract()" ;;
     esac
   else
     echo "'$1' is not a valid file"
   fi
 }
 
-
 merge_ts() {
   local out="${1:-output.ts}"
-  find . -type f -name "*.ts" -print0 \
-    | sort -z -V \
-    | xargs -0 cat > "$out"
+  find . -type f -name "*.ts" -print0 | sort -z -V | xargs -0 cat > "$out"
   print "Created $out"
 }
 
@@ -247,7 +237,6 @@ fbuild() {
   return $rc
 }
 
-# Lazy-load conda/mamba on first use
 __mamba_init() {
   unset -f conda mamba
   if [[ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]]; then
@@ -263,18 +252,15 @@ mamba() { __mamba_init; mamba "$@"; }
 ### ---------------------------------------------------------
 ### 7. KEYBINDINGS
 ### ---------------------------------------------------------
-# Standard horizontal navigation
 bindkey "${terminfo[kcub1]}" backward-char
 bindkey "${terminfo[kcuf1]}" forward-char
 
-# Menuselect keymap (fzf-tab / completion menu navigation)
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^[[A' up-line-or-history
 bindkey -M menuselect '^[[B' down-line-or-history
 bindkey -M menuselect '^[[C' forward-char
 bindkey -M menuselect '^[[D' backward-char
 
-# Ctrl + Arrow keys for word-by-word jumping
 bindkey '^[[1;5D' backward-word
 bindkey '^[[5D'   backward-word
 bindkey '^[[1;5C' forward-word
