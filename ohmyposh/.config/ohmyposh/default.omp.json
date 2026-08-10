@@ -20,7 +20,7 @@
               "home_enabled": true
             },
           "style": "plain",
-          "template": "{{ if .Venv }} ➜ \ue235 ({{ .Venv }}) {{ end }}",
+          "template": "{{ if .Venv }} ➜ \ue715 ({{ .Venv }}) {{ end }}",
           "type": "python"
         },
         {
