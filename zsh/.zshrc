@@ -16,7 +16,6 @@ setopt no_hist_beep          # Prevent beep on history boundary
 setopt auto_pushd            # Make cd push old directory to stack
 setopt pushd_ignore_dups     # Don't push duplicates to directory stack
 setopt pushd_silent          # Hide directory stack output on cd
-setopt rm_star_silent        # Don't prompt confirmation when running `rm path/*`
 setopt interactive_comments  # Allow comments (#) in interactive shell prompts
 
 
@@ -45,34 +44,31 @@ path=(
   "$ANDROID_HOME/platform-tools"
   "$ANDROID_HOME/emulator"
   "$ANDROID_HOME/cmdline-tools/latest/bin"
-  "$path[@]"
+  $path
 )
 export PATH
 
 
 ### ---------------------------------------------------------
-### 3. ZINIT PLUGIN MANAGER & ANNEXES
+### 3. ZINIT PLUGIN MANAGER
 ### ---------------------------------------------------------
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d "$ZINIT_HOME" ]]; then
+    print -P "%F{33}Installing ZDHARMA-CONTINUUM Zinit…%f"
+    mkdir -p "$(dirname "$ZINIT_HOME")"
+    git clone https://github.com/zdharma-continuum/zinit "$ZINIT_HOME"
 fi
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+source "$ZINIT_HOME/zinit.zsh"
 
-# MUST be loaded synchronously BEFORE binary downloads use as"command"
+# Load annexes synchronously
 zinit light zdharma-continuum/zinit-annex-bin-gem-node
 
 
 ### ---------------------------------------------------------
 ### 4. BINARIES MANAGED BY ZINIT
 ### ---------------------------------------------------------
-# Install & manage eza
+# eza
 zinit ice as"command" from"gh-r" pick"eza" \
   atload'
     alias ls="eza --icons=auto --hyperlink --color=auto"
@@ -82,24 +78,12 @@ zinit ice as"command" from"gh-r" pick"eza" \
   '
 zinit light eza-community/eza
 
-# Install & manage bat (Robust tar extraction & permission assignment)
+# bat
 zinit ice as"command" from"gh-r" bpick"*.tar.gz" mv"bat-* -> bat" pick"bat/bat" \
   atclone"chmod +x bat/bat" atpull"%atclone" \
   atload'alias cat="bat --style=plain"'
 zinit light sharkdp/bat
 
-# # Install & manage Starship prompt
-# zinit ice as"command" from"gh-r" pick"starship" \
-#     atclone"./starship init zsh > init.zsh; zcompile init.zsh" \
-#     atpull"%atclone" src"init.zsh"
-# zinit light starship/starship
-
-
-# Install & manage Oh My Posh # zi delete oh-my-posh -y && exec zsh
-mkdir -p "$HOME/.config/ohmyposh"
-if [[ ! -f "$HOME/.config/ohmyposh/default.omp.json" ]]; then
-    curl -fsSL https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/uew.omp.json -o "$HOME/.config/ohmyposh/default.omp.json"
-fi
 
 # Install & manage Oh My Posh pointing to your custom/dotfile config
 # zinit ice as"command" id-as"oh-my-posh" pick"oh-my-posh" \
@@ -112,54 +96,53 @@ fi
 #     atpull'%atclone' src"init.zsh"
 # zinit light zdharma-continuum/null
 
-zinit ice as"command" id-as"oh-my-posh" pick"oh-my-posh" \
-    atclone'
-        curl -fsSL https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -o oh-my-posh
-        chmod +x oh-my-posh
-    ' \
-    atpull'%atclone'
-zinit light zdharma-continuum/null
+# Oh My Posh (Managed cleanly via GitHub Releases)
+zinit ice as"command" from"gh-r" bpick"*linux-amd64" mv"posh* -> oh-my-posh" pick"oh-my-posh"
+zinit light JanDeDobbeleer/oh-my-posh
 
-# 2. Evaluate the config dynamically on shell startup
-if command -v oh-my-posh &> /dev/null; then
-  eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/default.omp.json")"
+# Initialize Oh My Posh theme
+mkdir -p "$HOME/.config/ohmyposh"
+if [[ ! -f "$HOME/.config/ohmyposh/default.omp.json" ]]; then
+    curl -fsSL https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/uew.omp.json -o "$HOME/.config/ohmyposh/default.omp.json"
 fi
 
+if command -v oh-my-posh &>/dev/null; then
+    eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/default.omp.json")"
+fi
 
 
 ### ---------------------------------------------------------
 ### 5. PLUGINS & COMPLETION
 ### ---------------------------------------------------------
-# 1. Completion engine setup
 zinit light zsh-users/zsh-completions
 
+# Optimized Completion initialization (re-compiles once every 24h max)
 autoload -Uz compinit
 ZCOMPDUMP="${ZDOTDIR:-$HOME}/.zcompdump"
-if [[ -s "$ZCOMPDUMP" && (! -s "${ZCOMPDUMP}.zc" || "$ZCOMPDUMP" -nt "${ZCOMPDUMP}.zc") ]]; then
-  compinit -u
-  zcompile "$ZCOMPDUMP"
+if [[ -n "#$ZCOMPDUMP(#qN.mh+24)" ]]; then
+  compinit -d "$ZCOMPDUMP"
+  touch "$ZCOMPDUMP"
 else
-  compinit -C -u
+  compinit -C -d "$ZCOMPDUMP"
 fi
 
 zmodload zsh/complist
 zstyle ':completion:*' menu select
 
-# 2. Critical synchronous UI components
 zinit light zsh-users/zsh-autosuggestions
 
-# Fast fzf-tab loading with compiled C-helpers
+# fzf-tab
 zinit ice compile"lib/*"
 zinit light Aloxaf/fzf-tab
 
 zstyle ':fzf-tab:complete:*' fzf-preview \
     'if [[ -d $realpath ]]; then eza -1 --icons=auto --color=always $realpath; elif [[ -f $realpath ]]; then bat --color=always --style=header,grid $realpath 2>/dev/null || cat $realpath; fi'
 
-# 3. Smart Directory Navigation
+# Zoxide
 zinit ice as"command" from"gh-r" pick"zoxide" atload'eval "$(zoxide init zsh --cmd cd)"'
 zinit light ajeetdsouza/zoxide
 
-# 4. Deferred Plugins & Annexes (Background loading)
+# Deferred Plugins (Background loading)
 zinit wait"0" lucid light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-patch-dl \
@@ -169,7 +152,7 @@ zinit wait"0" lucid light-mode for \
     hlissner/zsh-autopair \
     wfxr/forgit
 
-# Deferred Substring Search with internal keybind hooks
+# Deferred Substring Search
 zinit ice wait"0" lucid atload'
     bindkey "^[[A" history-substring-search-up
     bindkey "^[[B" history-substring-search-down
@@ -177,6 +160,9 @@ zinit ice wait"0" lucid atload'
     bindkey "${terminfo[kcud1]}" history-substring-search-down
 '
 zinit light zsh-users/zsh-history-substring-search
+
+
+
 
 
 ### ---------------------------------------------------------
@@ -225,8 +211,6 @@ alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocke
 alias zj='zellij attach --create "${USER}"'
 alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents 2>/dev/null || pwd | wl-copy 2>/dev/null || pwd | xclip -selection clipboard 2>/dev/null"
 alias poshreload="zi delete oh-my-posh -y && exec zsh"
-
-
 
 # --- Functions ---
 fd() {

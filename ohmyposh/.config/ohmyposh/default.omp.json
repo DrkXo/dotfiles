@@ -1,121 +1,116 @@
 {
-    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-    "blocks": [
-      {
-        "alignment": "left",
-        "newline": true,
-        "segments": [
-          {
-            "foreground": "#BBC4B9",
-            "leading_diamond":"<#BFA8BF>~</> ",
-            "style": "diamond",
-            "template": "{{ .UserName }} ",
-            "type": "session"
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#BBC4B9",
+          "options": {
+            "time_format": "15:04"
           },
-          {
-                    "foreground": "#0fc469",
-                    "style": "plain",
-                    "template": "{{ if .Env.CONDA_DEFAULT_ENV }}➜ ({{.Env.CONDA_DEFAULT_ENV}}) {{ end }}",
-                    "type": "text"
-          },
-          {
-            "foreground": "#BFA8BF",
-            "options": {
-              "branch_icon": "\ue725 ",
-              "fetch_status": true,
-              "fetch_upstream_icon": true
+          "style": "plain",
+          "template": "{{ .HostName }}",
+          "type": "session"
+        },
+        {
+          "foreground": "#BBC4B9",
+          "options": {
+              "home_enabled": true
             },
-            "style": "diamond",
-            "template": "<#fff>{{ .UpstreamIcon }}</>{{ .HEAD }}",
-            "type": "git"
+          "style": "plain",
+          "template": "{{ if .Venv }} ➜ \ue235 ({{ .Venv }}) {{ end }}",
+          "type": "python"
+        },
+        {
+          "foreground": "cyan",
+          "options": {
+            "style": "folder"
           },
-          {
-            "foreground": "#BFA8BF",
-            "style": "powerline",
-            "template": " <#fff>\uf120</> {{ .Name }} ",
-            "type": "shell"
-          }
-        ],
-        "type": "prompt"
-      },
-      {
-        "alignment": "right",
-        "segments": [
-          {
-            "foreground": "#fff",
-            "style": "plain",
-            "template": "  ",
-            "type": "text"
+          "style": "plain",
+          "template": " <#ffffff>in</> {{ .Path }} ",
+          "type": "path"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "#BBC4B9",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#E06C75{{ end }}"
+          ],
+          "template": " x{{ reason .Code }}"
+        },
+        {
+          "foreground": "#BBC4B9",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#BBC4B9{{ end }}"
+          ],
+          "options": {
+            "style": "roundrock",
+            "always_enabled": true
           },
-          {
-            "foreground": "#fff",
-            "options": {
-              "style": "dallas",
-              "threshold": 0
-            },
-            "style": "diamond",
-            "template": " <#BBC4B9>{{ .FormattedMs }}s</> <#fff>\udb80\udddd</>",
-            "type": "executiontime"
+          "style": "diamond",
+          "template": " {{ .FormattedMs }} ",
+          "type": "executiontime"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#BBC4B9",
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#BBC4B9{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#BBC4B9{{ end }}",
+            "{{ if gt .Ahead 0 }}#BBC4B9{{ end }}",
+            "{{ if gt .Behind 0 }}#BBC4B9{{ end }}"
+          ],
+          "options": {
+            "branch_template": "{{ trunc 25 .Branch }}",
+            "fetch_status": true,
+            "fetch_upstream_icon": false,
+            "branch_icon": "\uf418 ",
+            "branch_identical_icon": "\uf444",
+            "branch_gone_icon": "\ueab8"
           },
-          {
-            "foreground": "#BBC4B9",
-            "options": {
-              "time_format": "Monday <#fff>at</> 3:04 PM"
-            },
-            "style": "diamond",
-            "template": " {{ .CurrentDate | date .Format }} ",
-            "type": "time"
-          },
-          {
-            "options": {
-              "root_icon": "\uf292 "
-            },
-            "style": "diamond",
-            "template": " \uf0e7",
-            "type": "root"
-          },
-          {
-            "foreground": "#BBC4B9",
-            "style": "diamond",
-            "template": " <#fff>\ue718</> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
-            "type": "node"
-          }
-        ],
-        "type": "prompt"
-      },
-      {
-        "alignment": "left",
-        "newline": true,
-        "segments": [
-          {
-            "foreground": "#B6D6F2",
-            "leading_diamond": "<#BFA8BF>~</>",
-            "options": {
-                        "style": "folder"
-                    },
-
-            "style": "diamond",
-            "template": " \ue5ff {{ .Folder }}",
-            "trailing_diamond": "",
-            "type": "path"
-          },
-          {
-            "foreground": "#BFA8BF",
-            "foreground_templates": [
-              "{{ if gt .Code 0 }}#fff{{ end }}"
-            ],
-            "options": {
-              "always_enabled": true
-            },
-            "style": "plain",
-            "template": " \u007E ",
-            "type": "status"
-          }
-        ],
-        "type": "prompt"
-      }
-    ],
-    "console_title_template": "{{ .Folder }}",
-
-    "version": 4
-  }
+          "style": "plain",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#BBC4B9",
+          "style": "plain",
+          "template": "\u0021",
+          "type": "root"
+        },
+        {
+          "foreground": "#BBC4B9",
+          "style": "plain",
+          // "template": "\u276f",
+          "template": "@",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 4
+}
