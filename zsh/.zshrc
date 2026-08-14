@@ -9,7 +9,10 @@ export SAVEHIST=100000
 setopt hist_ignore_dups      # Do not record duplicate commands
 setopt hist_ignore_space     # Ignore commands starting with space
 setopt share_history         # Share history instantly across sessions
+setopt inc_append_history    # Immediately write to history file
 setopt extended_history      # Save timestamps in history
+setopt hist_expire_dups_first # Expire duplicates first when trimming history
+setopt hist_find_no_dups     # Do not display duplicates when searching
 setopt no_hist_beep          # Prevent beep on history boundary
 
 # Directory navigation & usability options
@@ -22,14 +25,14 @@ setopt interactive_comments  # Allow comments (#) in interactive shell prompts
 ### ---------------------------------------------------------
 ### 2. ENVIRONMENT VARIABLES & PATHS
 ### ---------------------------------------------------------
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$UID}/ssh-agent.socket"
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/29.0.14033849"
 export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
 export XDG_CURRENT_DESKTOP="KDE"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
-# Tie scalar PATH and array path together cleanly in Zsh
+# Deduplicate scalar PATH and array path cleanly
 typeset -U path PATH fpath FPATH
 
 path=(
@@ -37,13 +40,13 @@ path=(
   "$HOME/.local/lib/simutil"
   "$HOME/.cargo/bin"
   "$HOME/go/bin"
-  "$HOME/fvm/bin"
   "$HOME/fvm/default/bin"
+  "$HOME/fvm/bin"
   "$HOME/.pub-cache/bin"
-  "$ANDROID_HOME/tools"
+  "$ANDROID_HOME/cmdline-tools/latest/bin"
   "$ANDROID_HOME/platform-tools"
   "$ANDROID_HOME/emulator"
-  "$ANDROID_HOME/cmdline-tools/latest/bin"
+  "$ANDROID_HOME/tools"
   $path
 )
 export PATH
@@ -61,7 +64,6 @@ fi
 
 source "$ZINIT_HOME/zinit.zsh"
 
-# Load annexes synchronously
 zinit light zdharma-continuum/zinit-annex-bin-gem-node
 
 
@@ -69,38 +71,30 @@ zinit light zdharma-continuum/zinit-annex-bin-gem-node
 ### 4. BINARIES MANAGED BY ZINIT
 ### ---------------------------------------------------------
 # eza
-zinit ice as"command" from"gh-r" pick"eza" \
-  atload'
-    alias ls="eza --icons=auto --hyperlink --color=auto"
-    alias ll="eza -la --icons=auto --hyperlink --color=auto --git"
-    alias la="eza -a --icons=auto --hyperlink --color=auto"
-    alias l="eza -F --icons=auto"
-  '
+zinit ice as"command" from"gh-r" pick"eza"
 zinit light eza-community/eza
 
 # bat
-zinit ice as"command" from"gh-r" bpick"*.tar.gz" mv"bat-* -> bat" pick"bat/bat" \
-  atclone"chmod +x bat/bat" atpull"%atclone" \
-  atload'alias cat="bat --style=plain"'
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" mv"bat-* -> bat" pick"bat/bat"
 zinit light sharkdp/bat
 
+# fzf
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"fzf" \
+    atclone'./fzf --zsh > fzf.zsh 2>/dev/null || true' \
+    atpull'%atclone' \
+    src"fzf.zsh"
+zinit light junegunn/fzf
 
-# Install & manage Oh My Posh pointing to your custom/dotfile config
-# zinit ice as"command" id-as"oh-my-posh" pick"oh-my-posh" \
-#     atclone'
-#         curl -fsSL https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -o oh-my-posh
-#         chmod +x oh-my-posh
-#         ./oh-my-posh init zsh --config "$HOME/.config/ohmyposh/default.omp.json" > init.zsh
-#         zcompile init.zsh
-#     ' \
-#     atpull'%atclone' src"init.zsh"
-# zinit light zdharma-continuum/null
+# delta
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"delta*/delta" \
+    atload'export GIT_PAGER="delta"'
+zinit light dandavison/delta
 
-# Oh My Posh (Managed cleanly via GitHub Releases)
+# Oh My Posh Binary
 zinit ice as"command" from"gh-r" bpick"*linux-amd64" mv"posh* -> oh-my-posh" pick"oh-my-posh"
 zinit light JanDeDobbeleer/oh-my-posh
 
-# Initialize Oh My Posh theme
+# Oh My Posh Theme Setup & Initialization
 mkdir -p "$HOME/.config/ohmyposh"
 if [[ ! -f "$HOME/.config/ohmyposh/default.omp.json" ]]; then
     curl -fsSL https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/uew.omp.json -o "$HOME/.config/ohmyposh/default.omp.json"
@@ -110,16 +104,15 @@ if command -v oh-my-posh &>/dev/null; then
     eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/default.omp.json")"
 fi
 
-
 ### ---------------------------------------------------------
 ### 5. PLUGINS & COMPLETION
 ### ---------------------------------------------------------
 zinit light zsh-users/zsh-completions
 
-# Optimized Completion initialization (re-compiles once every 24h max)
+# Fixed & Optimized Completion initialization
 autoload -Uz compinit
 ZCOMPDUMP="${ZDOTDIR:-$HOME}/.zcompdump"
-if [[ -n "#$ZCOMPDUMP(#qN.mh+24)" ]]; then
+if [[ -n ${ZCOMPDUMP}(N.mh+24) ]]; then
   compinit -d "$ZCOMPDUMP"
   touch "$ZCOMPDUMP"
 else
@@ -162,9 +155,6 @@ zinit ice wait"0" lucid atload'
 zinit light zsh-users/zsh-history-substring-search
 
 
-
-
-
 ### ---------------------------------------------------------
 ### 6. ALIASES & FUNCTIONS
 ### ---------------------------------------------------------
@@ -173,6 +163,18 @@ alias q="exit"
 alias grep="grep --color=auto"
 alias r="source ~/.zshrc"
 alias mkdir="mkdir -p"
+
+# eza / bat aliases
+if command -v eza &>/dev/null; then
+  alias ls="eza --icons=auto --hyperlink --color=auto"
+  alias ll="eza -la --icons=auto --hyperlink --color=auto --git"
+  alias la="eza -a --icons=auto --hyperlink --color=auto"
+  alias l="eza -F --icons=auto"
+fi
+
+if command -v bat &>/dev/null; then
+  alias cat="bat --style=plain"
+fi
 
 if command -v trash-put &>/dev/null; then
   alias rm="trash-put"
@@ -211,7 +213,7 @@ alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocke
 alias lp='lazypodman'
 alias zj='zellij attach --create "${USER}"'
 alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents 2>/dev/null || pwd | wl-copy 2>/dev/null || pwd | xclip -selection clipboard 2>/dev/null"
-alias poshreload="zi delete oh-my-posh -y && exec zsh"
+alias poshreload="zi delete JanDeDobbeleer/oh-my-posh -y && exec zsh"
 
 # SSH
 alias sshkey='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_ed25519'
@@ -230,15 +232,15 @@ extract() {
   if [[ -f "$1" ]]; then
     case "$1" in
       *.tar.bz2|*.tbz2) if command -v pv &>/dev/null; then pv "$1" | tar xjf -; else tar xvjf "$1"; fi ;;
-      *.tar.gz|*.tgz)  if command -v pv &>/dev/null; then pv "$1" | tar xzf -; else tar xvzf "$1"; fi ;;
-      *.tar)           if command -v pv &>/dev/null; then pv "$1" | tar xf -; else tar xvf "$1"; fi ;;
-      *.bz2)           if command -v pv &>/dev/null; then pv "$1" | bunzip2 > "${1%.bz2}"; else bunzip2 -v "$1"; fi ;;
-      *.gz)            if command -v pv &>/dev/null; then pv "$1" | gunzip > "${1%.gz}"; else gunzip -v "$1"; fi ;;
-      *.rar)           unrar x "$1" ;;
-      *.zip)           unzip "$1" ;;
-      *.Z)             compress -d "$1" ;;
-      *.7z)            7z x "$1" ;;
-      *)               echo "'$1' cannot be extracted via extract()" ;;
+      *.tar.gz|*.tgz)   if command -v pv &>/dev/null; then pv "$1" | tar xzf -; else tar xvzf "$1"; fi ;;
+      *.tar)            if command -v pv &>/dev/null; then pv "$1" | tar xf -; else tar xvf "$1"; fi ;;
+      *.bz2)            if command -v pv &>/dev/null; then pv "$1" | bunzip2 > "${1%.bz2}"; else bunzip2 -v "$1"; fi ;;
+      *.gz)             if command -v pv &>/dev/null; then pv "$1" | gunzip > "${1%.gz}"; else gunzip -v "$1"; fi ;;
+      *.rar)            unrar x "$1" ;;
+      *.zip)            unzip "$1" ;;
+      *.Z)              compress -d "$1" ;;
+      *.7z)             7z x "$1" ;;
+      *)                echo "'$1' cannot be extracted via extract()" ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -288,4 +290,3 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[5D'   backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^[[5C'   forward-word
-
