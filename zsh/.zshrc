@@ -94,6 +94,19 @@ zinit light dandavison/delta
 zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"lazygit"
 zinit light jesseduffield/lazygit
 
+# lazydocker
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"lazydocker"
+zinit light jesseduffield/lazydocker
+
+
+# fd - Simple, fast alternative to 'find' (enhances your 'fd()' function)
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" mv"fd-* -> fd" pick"fd/fd"
+zinit light sharkdp/fd
+
+# ripgrep - Ultra-fast search tool
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"ripgrep*/rg"
+zinit light BurntSushi/ripgrep
+
 # Oh My Posh Binary
 zinit ice as"command" from"gh-r" bpick"*linux-amd64" mv"posh* -> oh-my-posh" pick"oh-my-posh"
 zinit light JanDeDobbeleer/oh-my-posh
@@ -164,7 +177,12 @@ zinit light zsh-users/zsh-history-substring-search
 ### ---------------------------------------------------------
 alias c="clear"
 alias q="exit"
-alias grep="grep --color=auto"
+# Upgrade grep alias to use ripgrep if installed
+if command -v rg &>/dev/null; then
+  alias grep="rg"
+else
+  alias grep="grep --color=auto"
+fi
 alias r="source ~/.zshrc"
 alias mkdir="mkdir -p"
 
