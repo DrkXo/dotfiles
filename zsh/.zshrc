@@ -38,7 +38,7 @@ path=(
   "$HOME/.cargo/bin"
   "$HOME/go/bin"
   "$HOME/fvm/bin"
-  "$HOME/fvm/versions/3.44.2/bin"
+  "$HOME/fvm/default/bin"
   "$HOME/.pub-cache/bin"
   "$ANDROID_HOME/tools"
   "$ANDROID_HOME/platform-tools"
@@ -208,6 +208,7 @@ alias rsyncc='rsync -avhW --no-compress --progress'
 alias batt60='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 alias batt100='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 alias lazypodman='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker'
+alias lp='lazypodman'
 alias zj='zellij attach --create "${USER}"'
 alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents 2>/dev/null || pwd | wl-copy 2>/dev/null || pwd | xclip -selection clipboard 2>/dev/null"
 alias poshreload="zi delete oh-my-posh -y && exec zsh"
@@ -284,3 +285,4 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[5D'   backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^[[5C'   forward-word
+
