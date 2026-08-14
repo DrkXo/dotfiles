@@ -90,6 +90,10 @@ zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"delta*/delta" \
     atload'export GIT_PAGER="delta"'
 zinit light dandavison/delta
 
+# lazygit
+zinit ice as"command" from"gh-r" bpick"*.tar.gz" pick"lazygit"
+zinit light jesseduffield/lazygit
+
 # Oh My Posh Binary
 zinit ice as"command" from"gh-r" bpick"*linux-amd64" mv"posh* -> oh-my-posh" pick"oh-my-posh"
 zinit light JanDeDobbeleer/oh-my-posh
