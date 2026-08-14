@@ -213,6 +213,9 @@ alias zj='zellij attach --create "${USER}"'
 alias copydir="pwd | qdbus org.kde.klipper /klipper setClipboardContents 2>/dev/null || pwd | wl-copy 2>/dev/null || pwd | xclip -selection clipboard 2>/dev/null"
 alias poshreload="zi delete oh-my-posh -y && exec zsh"
 
+# SSH
+alias sshkey='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_ed25519'
+
 # --- Functions ---
 fd() {
   local dir
